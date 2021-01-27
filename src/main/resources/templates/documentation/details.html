@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+
+<head>
+
+    <th:block th:include="include :: tableHeader('文档详情')" />
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-2" id="navigation">
+            <div class="ibox-content">
+                <div class="folder-list">
+                    <h5>目录列表</h5>
+                </div>
+                <div class="ibox-content">
+                <ul class="folder-list" style="padding: 0" th:each="details:${Documentation.documentationDetailss}">
+                    <li><a th:href="'#'+${details.id}"><i class="fa fa-circle-o"></i><text th:text="${details.title}"></text></a></li>
+                </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div class="ibox-content">
+                <div class="folder-list">
+                    <h5>文档详情</h5>
+                </div>
+
+                <div class="ibox-content" th:each="details:${Documentation.documentationDetailss}" th:id="${details.id}">
+                    <p class="m-b-lg">
+                    <h3 th:text="${details.title}"></h3>
+                    <p th:utext="${details.content}"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block th:include="include :: tableFooter" />
+<script>
+
+    $(window).scroll(function () {
+
+        var scrollHeight = document.documentElement.scrollTop;
+
+        $("#navigation").css({ top: scrollHeight  }).show(); //WaitList 是 div ID
+
+    });
+
+</script>
+
+</body>
+
+</html>

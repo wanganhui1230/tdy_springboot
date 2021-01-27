@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 嵌套列表</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-4">
+                <div id="nestable-menu">
+                    <button type="button" data-action="expand-all" class="btn btn-white btn-sm">展开所有</button>
+                    <button type="button" data-action="collapse-all" class="btn btn-white btn-sm">收起所有</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+
+            <div class="col-sm-3">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>文档标题</h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                            添加标题
+                        </p>
+
+                        <div class="dd" id="nestable2">
+                            <ol class="dd-list">
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">
+                                        <span class="label label-info"></span> 群组
+                                    </div>
+
+                                </li>
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">
+                                        <span class="label label-info"></span> 群组
+                                    </div>
+
+                                </li>
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">
+                                        <span class="label label-info"></span> 群组
+                                    </div>
+
+                                </li>
+
+                            </ol>
+                        </div>
+                        <div class="m-t-md">
+                            <h5>数据：</h5>
+                        </div>
+                        <textarea id="nestable2-output" class="form-control"></textarea>
+
+
+                    </div>
+
+                </div>
+
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+
+
+    <!-- Nestable List -->
+    <script src="js/plugins/nestable/jquery.nestable.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var updateOutput = function (e) {
+                debugger
+                var list = e.length ? e : $(e.target),
+                    output = list.data('output');
+                if (window.JSON) {
+                    output.val(window.JSON.stringify(list.nestable('serialize'))); //, null, 2));
+                } else {
+                    output.val('浏览器不支持');
+                }
+            };
+
+            // activate Nestable for list 2
+            $('#nestable2').nestable({
+                group: 1
+            }).on('change', updateOutput);
+
+            // output initial serialised data
+            updateOutput($('#nestable2').data('output', $('#nestable2-output')));
+
+            $('#nestable-menu').on('click', function (e) {
+                var target = $(e.target),
+                    action = target.data('action');
+                if (action === 'expand-all') {
+                    $('.dd').nestable('expandAll');
+                }
+                if (action === 'collapse-all') {
+                    $('.dd').nestable('collapseAll');
+                }
+            });
+        });
+
+        jQuery(".dd-handle").dblclick(function () {
+            id = jQuery(this).attr('id');
+            text = jQuery(this).text();
+            if (text) {
+                jQuery(this).html("<textarea style='width:200px;height:50px;' name=" + id + " >" + text + "</textarea>");
+                jQuery(".dd-handle > textarea").focus().blur(function () {
+                    jQuery.ajax({
+                        type: "POST",
+                        url: "/Home/Update",
+                        data: "ID=" + id + "&Str=" + jQuery("#" + id + " > textarea").val(),
+                        success: function (msg) {
+                            jQuery("#" + id).html(jQuery("#" + id + " > textarea").val());
+                        },
+                        error: function (msg) {jQuery("#" + id).text(msg);}
+                    });
+                })
+            }
+        })
+
+    </script>
+
+
+    
+</body>
+
+</html>

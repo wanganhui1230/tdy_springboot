@@ -1,0 +1,4345 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 代码编辑器</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/plugins/codemirror/codemirror.css" rel="stylesheet">
+    <link href="css/plugins/codemirror/ambiance.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>项目搭建流程</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <p class="m-b-lg">
+                        <h3>项目结构</h3>
+                        </p>
+                        <textarea id="code1">
+com.example
+    ├── common            // 通用配置
+    │       ├──config                   // 配置中心
+    │       │       └── MybatisPlusConfig                // MybatisPlus配置
+    │       │       └── ShiroConfig                      // 权限配置
+    │       │       └── SpringUtil                       // Spring上下文工具类
+    │       │       └── WebConfig                        // web拦截器
+    │       └── entity                     // 通用对象
+    │       └── shiro                      // 权限控制
+    │       └── utils                      // 工具类
+    ├── project         // 业务处理
+    ├── resources
+    │       └── mapper                      // 数据库查询
+    │       └── static                      // 静态资源
+    │       └── templates                   // 前端页面
+                        </textarea>
+                    </div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- Peity -->
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+
+<!-- CodeMirror -->
+<script src="js/plugins/codemirror/codemirror.js"></script>
+<script src="js/plugins/codemirror/mode/javascript/javascript.js"></script>
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+
+<!-- 弹出框 -->
+<script src="js/plugins/layer/layer.js"></script>
+<script>
+    CodeMirror.fromTextArea(document.getElementById("code1"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        styleActiveLine: true,
+        lineWrapping: true, //代码折叠
+        line: true,
+        mode:"text/x-java" ,
+        theme: "ambiance"
+    });
+</script>
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第一步</h3> 新建springboot项目，选择jdk1.8，只添加web依赖就可以   添加步骤 <text style="font-size:20px;color:red">File -New -Project -Spring Initializr -选择jdk1.8  - Next</text>
+                        </p>
+                        <p class="m-b-lg">
+                        <h3>第二步</h3> 集成Mybatis-Plus，MYSQL，数据库连接池 HikariCP ，导入所需要的包
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code2')" >点击复制</button>
+                        <textarea id="code2">
+                         <!-- Lombok -->
+                        <dependency>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </dependency>
+                        <!-- Lombok -->
+
+                         <!--Mybatis-->
+                        <dependency>
+                            <groupId>org.mybatis.spring.boot</groupId>
+                            <artifactId>mybatis-spring-boot-starter</artifactId>
+                            <version>1.3.1</version>
+                        </dependency>
+                        <!--Mybatis-->
+
+                        <!--Mybatis-Plus-->
+                        <dependency>
+                            <groupId>com.baomidou</groupId>
+                            <artifactId>mybatis-plus</artifactId>
+                            <version>2.2.0</version>
+                        </dependency>
+                        <!--Mybatis-Plus-->
+
+                        <!--JDBC-->
+                        <dependency>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-starter-jdbc</artifactId>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>org.apache.tomcat</groupId>
+                                    <artifactId>tomcat-jdbc</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <!--JDBC-->
+
+                        <!--MYSQL-->
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                        </dependency>
+                        <!--MYSQL-->
+
+                        <!--数据库连接池 HikariCP-->
+                        <dependency>
+                            <groupId>com.zaxxer</groupId>
+                            <artifactId>HikariCP</artifactId>
+                            <version>2.7.8</version>
+                        </dependency>
+                        <!--数据库连接池 HikariCP-->
+
+                        <!-- 分页插件pagehelper -->
+                        <dependency>
+                            <groupId>com.github.pagehelper</groupId>
+                            <artifactId>pagehelper</artifactId>
+                            <version>5.0.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.github.pagehelper</groupId>
+                            <artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
+                            <version>1.2.3</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.github.pagehelper</groupId>
+                            <artifactId>pagehelper-spring-boot-starter</artifactId>
+                            <version>1.2.3</version>
+                        </dependency>
+                        <!-- 分页插件pagehelper -->
+
+                        <!--常用工具类 -->
+                        <dependency>
+                            <groupId>org.apache.commons</groupId>
+                            <artifactId>commons-lang3</artifactId>
+                        </dependency>
+                        <!--常用工具类 -->
+
+                        <!--  shiro核心包      -->
+                        <dependency>
+                            <groupId>org.apache.shiro</groupId>
+                            <artifactId>shiro-spring</artifactId>
+                            <version>1.7.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.crazycake</groupId>
+                            <artifactId>shiro-redis</artifactId>
+                            <version>3.3.1</version>
+                        </dependency>
+                        <!--  shiro核心包      -->
+
+
+                        <!-- SpringBoot集成thymeleaf模板 -->
+                        <dependency>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                        </dependency>
+                        <!-- SpringBoot集成thymeleaf模板 -->
+
+
+                        <dependency>
+                            <groupId>com.google.guava</groupId>
+                            <artifactId>guava</artifactId>
+                            <version>19.0</version>
+                        </dependency>
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code2"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        styleActiveLine: true,
+        lineWrapping: true, //代码折叠
+        line: true,
+        height:300,
+        theme: "ambiance"
+    });
+    editor.setSize("100%",500);
+</script>
+                        <p class="m-b-lg">
+                        <h3>第三步</h3> 找到application.properties文件，文件格式修改为yml，配置<text style="font-size:20px;color:red">application.yml</text>信息
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code3')" >点击复制</button>
+                        <textarea id="code3">
+server:
+  port: 9002  #项目端口号
+
+spring:
+  application:
+    name: tdy-springboot  #项目名称
+  thymeleaf:
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+  # 数据库配置
+  datasource: #数据库
+    driver-class-name: com.mysql.cj.jdbc.Driver #驱动名称
+    url: jdbc:mysql://127.0.0.1:3306/tdy_springboot?useSSL=false&useUnicode=true&characterEncoding=utf8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8  #数据库连接地址
+    username: root #数据库账号
+    password: root #数据库密码
+    type: com.zaxxer.hikari.HikariDataSource #连接池类型
+    hikari: #连接池
+      minimum-idle: 3 #最小空闲时间
+      auto-commit: true #是否自动提交
+      idle-timeout: 10000 #空闲超时时间
+      max-lifetime: 1800000 #生命周期
+      connection-timeout: 30000 #连接超时时间
+      connection-test-query: SELECT 1 #连接测试查询
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml   # mapper.xml位置
+  type-aliases-package: com.example   # domain位置
+
+
+pagehelper: #配置分页插件
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+                        </textarea>
+                    </div>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code3"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        styleActiveLine: true,
+        lineWrapping: true, //代码折叠
+        line: true,
+        height:300,
+        theme: "ambiance"
+    });
+    editor.setSize("100%",500);
+</script>
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四步</h3> 在com.example下新建 <text style="font-size:20px;color:red">common</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五步</h3> 在common下新建 <text style="font-size:20px;color:red">config</text> 包
+                        </p>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第六步</h3> 在config包下配置Mybatis-Plus的配置信息    新建<text style="font-size:20px;color:red">MybatisPlusConfig</text>类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code4')" >点击复制</button>
+                        <textarea id="code4">
+package com.example.common.config;
+
+import com.baomidou.mybatisplus.MybatisConfiguration;
+import com.baomidou.mybatisplus.MybatisXMLLanguageDriver;
+import com.baomidou.mybatisplus.entity.GlobalConfiguration;
+import com.baomidou.mybatisplus.enums.DBType;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.mapper.AutoSqlInjector;
+import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.plugin.Interceptor;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+
+import javax.sql.DataSource;
+import java.io.IOException;
+
+@Configuration
+@MapperScan("com.example.project.*.mapper")  //Mybatis的dao层的扫描范围
+@EnableConfigurationProperties(MybatisProperties.class) //在MybatisProperties.class类之后进行加载
+public class MybatisPlusConfig {
+
+    @Autowired
+    private DataSource dataSource;  //数据源
+
+    @Autowired
+    private MybatisProperties properties;  //Mybatis的属性
+
+    @Autowired
+    private ResourceLoader resourceLoader = new DefaultResourceLoader(); //默认资源加载器
+
+    @Autowired(required = false)
+    private Interceptor[] interceptors; //拦截器
+
+    @Autowired(required = false)
+    private DatabaseIdProvider databaseIdProvider;  //数据库厂商标识
+
+    /**
+     * mybatis-plus分页插件
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor page = new PaginationInterceptor(); //分页拦截器
+        page.setDialectType("mysql"); //设置数据库方言
+        return page;
+    }
+    /**
+     * 这里全部使用mybatis-autoconfigure 已经自动加载的资源。不手动指定
+     * 配置文件和mybatis-boot的配置文件同步
+     */
+    @Bean
+    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean() throws IOException {
+        MybatisSqlSessionFactoryBean mybatisPlus = new MybatisSqlSessionFactoryBean();  //mybatis会话工厂
+        mybatisPlus.setDataSource(dataSource); //设置数据源
+        mybatisPlus.setVfs(SpringBootVFS.class); //设置vfs
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();  //路径匹配资源模式解析器
+        mybatisPlus.setMapperLocations(resolver.getResources("classpath:mapper/*Mapper.xml"));  //设置扫描范围
+        if (StringUtils.hasText(this.properties.getConfigLocation())) {  //是否有配置信息
+            mybatisPlus.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfigLocation()));  //添加配置信息
+        }
+        mybatisPlus.setConfiguration(properties.getConfiguration());  //添加配置信息
+        if (!ObjectUtils.isEmpty(this.interceptors)) { //拦截器是否为空
+            mybatisPlus.setPlugins(this.interceptors);
+        }
+        // MP 全局配置，更多内容进入类看注释
+        GlobalConfiguration globalConfig = new GlobalConfiguration();
+        globalConfig.setDbType(DBType.MYSQL.name());//数据库类型
+        // ID 策略 AUTO->`0`("数据库ID自增") INPUT->`1`(用户输入ID") ID_WORKER->`2`("全局唯一ID") UUID->`3`("全局唯一ID")
+        //使用ID_WORKER_STR，因为前后端分离使用整形，前端JS会有精度丢失
+        globalConfig.setIdType(IdType.ID_WORKER_STR.getKey());
+        globalConfig.setSqlInjector(new AutoSqlInjector());
+        //MP 属性下划线 转 驼峰 , 如果原生配置 mc.setMapUnderscoreToCamelCase(true) 开启，该配置可以无。
+        //globalConfig.setDbColumnUnderline(true);
+        mybatisPlus.setGlobalConfig(globalConfig);
+        MybatisConfiguration mc = new MybatisConfiguration();
+        // 对于完全自定义的mapper需要加此项配置，才能实现下划线转驼峰
+        mc.setMapUnderscoreToCamelCase(true);
+        mc.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
+        mybatisPlus.setConfiguration(mc);
+        if (this.databaseIdProvider != null) {
+            mybatisPlus.setDatabaseIdProvider(this.databaseIdProvider);
+        }
+        if (StringUtils.hasLength(this.properties.getTypeAliasesPackage())) {
+            mybatisPlus.setTypeAliasesPackage(this.properties.getTypeAliasesPackage());  //设置类型别名包
+        }
+        if (StringUtils.hasLength(this.properties.getTypeHandlersPackage())) {
+            mybatisPlus.setTypeHandlersPackage(this.properties.getTypeHandlersPackage());  //设置类型处理程序包
+        }
+        if (!ObjectUtils.isEmpty(this.properties.resolveMapperLocations())) {
+            mybatisPlus.setMapperLocations(this.properties.resolveMapperLocations());  ////设置扫描范围
+        }
+        return mybatisPlus;
+    }
+}
+                        </textarea>
+                    </div>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code4"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        styleActiveLine: true,
+        lineWrapping: true, //代码折叠
+        line: true,
+        height:300,
+        theme: "ambiance"
+    });
+    editor.setSize("100%",500);
+</script>
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第七步</h3> 在common类下面新建<text style="font-size:20px;color:red">entity</text>包，存放公用的对象
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第八步</h3> 在entity下新建 <text style="font-size:20px;color:red">AjaxResult</text> 类  通用操作消息提醒
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code5')" >点击复制</button>
+                        <textarea id="code5">
+package com.example.common.entity;
+
+
+
+import com.example.common.utils.StringUtils;
+
+import java.util.HashMap;
+
+/**
+ * 操作消息提醒
+ *
+ * @author
+ */
+public class AjaxResult extends HashMap<String, Object>
+{
+    private static final long serialVersionUID = 1L;
+
+    public static final String CODE_TAG = "code";
+
+    public static final String MSG_TAG = "msg";
+
+    public static final String DATA_TAG = "data";
+
+    /**
+     * 状态类型
+     */
+    public enum Type
+    {
+        /** 成功 */
+        SUCCESS(0),
+        /** 警告 */
+        WARN(301),
+        /** 错误 */
+        ERROR(500);
+        private final int value;
+
+        Type(int value)
+        {
+            this.value = value;
+        }
+
+        public int value()
+        {
+            return this.value;
+        }
+    }
+
+    /** 状态类型 */
+    private Type type;
+
+    /** 状态码 */
+    private int code;
+
+    /** 返回内容 */
+    private String msg;
+
+    /** 数据对象 */
+    private Object data;
+
+    /**
+     * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
+     * @param type
+     * @param msg
+     * @param data
+     */
+    public AjaxResult(Type type, String msg, Object data)
+    {
+        super.put(CODE_TAG, type.value);
+        super.put(MSG_TAG, msg);
+        if (StringUtils.isNotNull(data))
+        {
+            super.put(DATA_TAG, data);
+        }
+    }
+
+    /**
+     * 初始化一个新创建的 AjaxResult 对象
+     *
+     * @param type 状态类型
+     * @param msg 返回内容
+     */
+    public AjaxResult(Type type, String msg)
+    {
+        super.put(CODE_TAG, type.value);
+        super.put(MSG_TAG, msg);
+    }
+
+
+
+    /**
+     * 返回成功消息
+     *
+     * @return 成功消息
+     */
+    public static AjaxResult success()
+    {
+        return AjaxResult.success("操作成功");
+    }
+
+    /**
+     * 返回成功数据
+     *
+     * @return 成功消息
+     */
+    public static AjaxResult success(Object data)
+    {
+        return AjaxResult.success("操作成功", data);
+    }
+
+    /**
+     * 返回成功消息
+     *
+     * @param msg 返回内容
+     * @return 成功消息
+     */
+    public static AjaxResult success(String msg)
+    {
+        return AjaxResult.success(msg, null);
+    }
+
+    /**
+     * 返回成功消息
+     *
+     * @param msg 返回内容
+     * @param data 数据对象
+     * @return 成功消息
+     */
+    public static AjaxResult success(String msg, Object data)
+    {
+        return new AjaxResult(Type.SUCCESS, msg, data);
+    }
+
+    /**
+     * 返回警告消息
+     *
+     * @param msg 返回内容
+     * @return 警告消息
+     */
+    public static AjaxResult warn(String msg)
+    {
+        return AjaxResult.warn(msg, null);
+    }
+
+    /**
+     * 返回警告消息
+     *
+     * @param msg 返回内容
+     * @param data 数据对象
+     * @return 警告消息
+     */
+    public static AjaxResult warn(String msg, Object data)
+    {
+        return new AjaxResult(Type.WARN, msg, data);
+    }
+
+    /**
+     * 返回错误消息
+     *
+     * @return
+     */
+    public static AjaxResult error()
+    {
+        return AjaxResult.error("操作失败");
+    }
+
+
+    /**
+     * 返回错误消息
+     *
+     * @param msg 返回内容
+     * @return 警告消息
+     */
+    public static AjaxResult error(String msg)
+    {
+        return AjaxResult.error(msg, null);
+    }
+
+    /**
+     * 返回错误消息
+     *
+     * @param msg 返回内容
+     * @param data 数据对象
+     * @return 警告消息
+     */
+    public static AjaxResult error(String msg, Object data)
+    {
+        return new AjaxResult(Type.ERROR, msg, data);
+    }
+
+    public Type getType()
+    {
+        return type;
+    }
+
+    public void setType(Type type)
+    {
+        this.type = type;
+    }
+
+    public int getCode()
+    {
+        return code;
+    }
+
+    public void setCode(int code)
+    {
+        this.code = code;
+    }
+
+    public String getMsg()
+    {
+        return msg;
+    }
+
+    public void setMsg(String msg)
+    {
+        this.msg = msg;
+    }
+
+    public Object getData()
+    {
+        return data;
+    }
+
+    public void setData(Object data)
+    {
+        this.data = data;
+    }
+
+
+}
+
+
+                        </textarea>
+                    </div>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code5"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        styleActiveLine: true,
+        lineWrapping: true, //代码折叠
+        line: true,
+        height:300,
+        theme: "ambiance"
+    });
+    editor.setSize("100%",500);
+</script>
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第九步</h3> 在entity下新建 <text style="font-size:20px;color:red">BaseController</text> 类  web层通用数据处理
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code6')" >点击复制</button>
+                        <textarea id="code6">
+package com.example.common.entity;
+
+
+import com.github.pagehelper.PageInfo;
+
+import java.util.List;
+
+/**
+ * web层通用数据处理
+ *
+ * @author
+ */
+public class BaseController
+{
+
+
+
+    /**
+     * 响应请求分页数据
+     */
+    protected TableDataInfo getDataTable(List<?> list)
+    {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(0);
+        rspData.setRows(list);
+        rspData.setTotal(new PageInfo(list).getTotal());
+        return rspData;
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param rows 影响行数
+     * @return 操作结果
+     */
+    protected AjaxResult toAjax(int rows)
+    {
+        return rows > 0 ? success() : error();
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param result 结果
+     * @return 操作结果
+     */
+    protected AjaxResult toAjax(boolean result)
+    {
+        return result ? success() : error();
+    }
+
+    /**
+     * 返回成功
+     */
+    public AjaxResult success()
+    {
+        return AjaxResult.success();
+    }
+
+    /**
+     * 返回成功
+     */
+    public AjaxResult success(Object data)
+    {
+        return AjaxResult.success(data);
+    }
+
+    /**
+     * 返回成功
+     */
+    public AjaxResult success(String msg, Object data)
+    {
+        return AjaxResult.success(msg,data);
+    }
+
+    /**
+     * 返回成功
+     */
+    public AjaxResult success(String msg)
+    {
+        return AjaxResult.success(msg);
+    }
+
+    /**
+     * 返回失败消息
+     */
+    public AjaxResult error()
+    {
+        return AjaxResult.error();
+    }
+
+    /**
+     * 返回失败消息
+     */
+    public AjaxResult error(String msg)
+    {
+        return AjaxResult.error(msg);
+    }
+
+}
+
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十步</h3> 在entity下新建 <text style="font-size:20px;color:red">BaseEntity</text> 类  Entity基类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code7')" >点击复制</button>
+                        <textarea id="code7">
+package com.example.common.entity;
+
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Maps;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Map;
+
+/**
+ * Entity基类
+ *
+ * @author
+ */
+public class BaseEntity implements Serializable
+{
+    private static final long serialVersionUID = 1L;
+
+    /** 搜索值 */
+    @TableField(exist = false)
+    private String searchValue;
+
+    /** 创建者 */
+    @TableField(exist = false)
+    private String createBy;
+
+    /** 创建时间 */
+    @TableField("create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
+    /** 更新者 */
+    @TableField(exist = false)
+    private String updateBy;
+
+    /** 更新时间 */
+    @TableField("update_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    /** 备注 */
+    @TableField(exist = false)
+    private String remark;
+
+    @TableField(exist = false)
+    private Integer pageSize;
+
+    @TableField(exist = false)
+    private Integer pageNum;
+
+    /** 请求参数 */
+    @TableField(exist = false)
+    private Map<String, Object> params;
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public String getSearchValue()
+    {
+        return searchValue;
+    }
+
+    public void setSearchValue(String searchValue)
+    {
+        this.searchValue = searchValue;
+    }
+
+    public String getCreateBy()
+    {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy)
+    {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateTime()
+    {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime)
+    {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateBy()
+    {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy)
+    {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateTime()
+    {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime)
+    {
+        this.updateTime = updateTime;
+    }
+
+    public String getRemark()
+    {
+        return remark;
+    }
+
+    public void setRemark(String remark)
+    {
+        this.remark = remark;
+    }
+
+    public Map<String, Object> getParams()
+    {
+        if (params == null)
+        {
+            params = Maps.newHashMap();
+        }
+        return params;
+    }
+
+    public void setParams(Map<String, Object> params)
+    {
+        this.params = params;
+    }
+}
+
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十一步</h3> 在entity下新建 <text style="font-size:20px;color:red">TableDataInfo</text> 类  表格分页数据对象
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code8')" >点击复制</button>
+                        <textarea id="code8">
+package com.example.common.entity;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 表格分页数据对象
+ *
+ */
+public class TableDataInfo implements Serializable
+{
+    private static final long serialVersionUID = 1L;
+    /** 总记录数 */
+    private long total;
+    /** 列表数据 */
+    private List<?> rows;
+    /** 消息状态码 */
+    private int code;
+
+    /**
+     * 表格数据对象
+     */
+    public TableDataInfo()
+    {
+    }
+
+    /**
+     * 分页
+     *
+     * @param list 列表数据
+     * @param total 总记录数
+     */
+    public TableDataInfo(List<?> list, int total)
+    {
+        this.rows = list;
+        this.total = total;
+    }
+
+    public long getTotal()
+    {
+        return total;
+    }
+
+    public void setTotal(long total)
+    {
+        this.total = total;
+    }
+
+    public List<?> getRows()
+    {
+        return rows;
+    }
+
+    public void setRows(List<?> rows)
+    {
+        this.rows = rows;
+    }
+
+    public int getCode()
+    {
+        return code;
+    }
+
+    public void setCode(int code)
+    {
+        this.code = code;
+    }
+}
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十二步</h3> 在common类下面新建<text style="font-size:20px;color:red">utils</text>包，通用的工具类
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                    <p class="m-b-lg">
+                    <h3>第十三步</h3> 在utils包下面新建<text style="font-size:20px;color:red">CharsetKit</text>类  字符集工具类
+                    </p>
+                    <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code9')" >点击复制</button>
+                    <textarea id="code9">
+package com.example.common.utils;
+
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * 字符集工具类
+ *
+ * @author tdys
+ *
+ */
+public class CharsetKit
+{
+    /** ISO-8859-1 */
+    public static final String ISO_8859_1 = "ISO-8859-1";
+    /** UTF-8 */
+    public static final String UTF_8 = "UTF-8";
+    /** GBK */
+    public static final String GBK = "GBK";
+
+    /** ISO-8859-1 */
+    public static final Charset CHARSET_ISO_8859_1 = Charset.forName(ISO_8859_1);
+    /** UTF-8 */
+    public static final Charset CHARSET_UTF_8 = Charset.forName(UTF_8);
+    /** GBK */
+    public static final Charset CHARSET_GBK = Charset.forName(GBK);
+
+    /**
+     * 转换为Charset对象
+     *
+     * @param charset 字符集，为空则返回默认字符集
+     * @return Charset
+     */
+    public static Charset charset(String charset)
+    {
+        return StringUtils.isEmpty(charset) ? Charset.defaultCharset() : Charset.forName(charset);
+    }
+
+    /**
+     * 转换字符串的字符集编码
+     *
+     * @param source 字符串
+     * @param srcCharset 源字符集，默认ISO-8859-1
+     * @param destCharset 目标字符集，默认UTF-8
+     * @return 转换后的字符集
+     */
+    public static String convert(String source, String srcCharset, String destCharset)
+    {
+        return convert(source, Charset.forName(srcCharset), Charset.forName(destCharset));
+    }
+
+    /**
+     * 转换字符串的字符集编码
+     *
+     * @param source 字符串
+     * @param srcCharset 源字符集，默认ISO-8859-1
+     * @param destCharset 目标字符集，默认UTF-8
+     * @return 转换后的字符集
+     */
+    public static String convert(String source, Charset srcCharset, Charset destCharset)
+    {
+        if (null == srcCharset)
+        {
+            srcCharset = StandardCharsets.ISO_8859_1;
+        }
+
+        if (null == destCharset)
+        {
+            srcCharset = StandardCharsets.UTF_8;
+        }
+
+        if (StringUtils.isEmpty(source) || srcCharset.equals(destCharset))
+        {
+            return source;
+        }
+        return new String(source.getBytes(srcCharset), destCharset);
+    }
+
+    /**
+     * @return 系统字符集编码
+     */
+    public static String systemCharset()
+    {
+        return Charset.defaultCharset().name();
+    }
+}
+
+                        </textarea>
+                </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十四步</h3> 在utils包下面新建<text style="font-size:20px;color:red">Convert</text>类  字符集工具类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code10')" >点击复制</button>
+                        <textarea id="code10">
+package com.example.common.utils;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.text.NumberFormat;
+import java.util.Set;
+
+/**
+ * 类型转换器
+ *
+ * @author tdys
+ */
+public class Convert
+{
+    /**
+     * 转换为字符串<br>
+     * 如果给定的值为null，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static String toStr(Object value, String defaultValue)
+    {
+        if (null == value)
+        {
+            return defaultValue;
+        }
+        if (value instanceof String)
+        {
+            return (String) value;
+        }
+        return value.toString();
+    }
+
+    /**
+     * 转换为字符串<br>
+     * 如果给定的值为<code>null</code>，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static String toStr(Object value)
+    {
+        return toStr(value, null);
+    }
+
+    /**
+     * 转换为字符<br>
+     * 如果给定的值为null，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Character toChar(Object value, Character defaultValue)
+    {
+        if (null == value)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Character)
+        {
+            return (Character) value;
+        }
+
+        final String valueStr = toStr(value, null);
+        return StringUtils.isEmpty(valueStr) ? defaultValue : valueStr.charAt(0);
+    }
+
+    /**
+     * 转换为字符<br>
+     * 如果给定的值为<code>null</code>，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Character toChar(Object value)
+    {
+        return toChar(value, null);
+    }
+
+    /**
+     * 转换为byte<br>
+     * 如果给定的值为<code>null</code>，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Byte toByte(Object value, Byte defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Byte)
+        {
+            return (Byte) value;
+        }
+        if (value instanceof Number)
+        {
+            return ((Number) value).byteValue();
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            return Byte.parseByte(valueStr);
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为byte<br>
+     * 如果给定的值为<code>null</code>，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Byte toByte(Object value)
+    {
+        return toByte(value, null);
+    }
+
+    /**
+     * 转换为Short<br>
+     * 如果给定的值为<code>null</code>，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Short toShort(Object value, Short defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Short)
+        {
+            return (Short) value;
+        }
+        if (value instanceof Number)
+        {
+            return ((Number) value).shortValue();
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            return Short.parseShort(valueStr.trim());
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为Short<br>
+     * 如果给定的值为<code>null</code>，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Short toShort(Object value)
+    {
+        return toShort(value, null);
+    }
+
+    /**
+     * 转换为Number<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Number toNumber(Object value, Number defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Number)
+        {
+            return (Number) value;
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            return NumberFormat.getInstance().parse(valueStr);
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为Number<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Number toNumber(Object value)
+    {
+        return toNumber(value, null);
+    }
+
+    /**
+     * 转换为int<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Integer toInt(Object value, Integer defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Integer)
+        {
+            return (Integer) value;
+        }
+        if (value instanceof Number)
+        {
+            return ((Number) value).intValue();
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            return Integer.parseInt(valueStr.trim());
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为int<br>
+     * 如果给定的值为<code>null</code>，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Integer toInt(Object value)
+    {
+        return toInt(value, null);
+    }
+
+    /**
+     * 转换为Integer数组<br>
+     *
+     * @param str 被转换的值
+     * @return 结果
+     */
+    public static Integer[] toIntArray(String str)
+    {
+        return toIntArray(",", str);
+    }
+
+    /**
+     * 转换为Long数组<br>
+     *
+     * @param str 被转换的值
+     * @return 结果
+     */
+    public static Long[] toLongArray(String str)
+    {
+        return toLongArray(",", str);
+    }
+
+    /**
+     * 转换为Integer数组<br>
+     *
+     * @param split 分隔符
+     * @param split 被转换的值
+     * @return 结果
+     */
+    public static Integer[] toIntArray(String split, String str)
+    {
+        if (StringUtils.isEmpty(str))
+        {
+            return new Integer[] {};
+        }
+        String[] arr = str.split(split);
+        final Integer[] ints = new Integer[arr.length];
+        for (int i = 0; i < arr.length; i++)
+        {
+            final Integer v = toInt(arr[i], 0);
+            ints[i] = v;
+        }
+        return ints;
+    }
+
+    /**
+     * 转换为Long数组<br>
+     *
+     * @param split 分隔符
+     * @param str 被转换的值
+     * @return 结果
+     */
+    public static Long[] toLongArray(String split, String str)
+    {
+        if (StringUtils.isEmpty(str))
+        {
+            return new Long[] {};
+        }
+        String[] arr = str.split(split);
+        final Long[] longs = new Long[arr.length];
+        for (int i = 0; i < arr.length; i++)
+        {
+            final Long v = toLong(arr[i], null);
+            longs[i] = v;
+        }
+        return longs;
+    }
+
+    /**
+     * 转换为String数组<br>
+     *
+     * @param str 被转换的值
+     * @return 结果
+     */
+    public static String[] toStrArray(String str)
+    {
+        return toStrArray(",", str);
+    }
+
+    /**
+     * 转换为String数组<br>
+     *
+     * @param split 分隔符
+     * @param split 被转换的值
+     * @return 结果
+     */
+    public static String[] toStrArray(String split, String str)
+    {
+        return str.split(split);
+    }
+
+    /**
+     * 转换为long<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Long toLong(Object value, Long defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Long)
+        {
+            return (Long) value;
+        }
+        if (value instanceof Number)
+        {
+            return ((Number) value).longValue();
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            // 支持科学计数法
+            return new BigDecimal(valueStr.trim()).longValue();
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为long<br>
+     * 如果给定的值为<code>null</code>，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Long toLong(Object value)
+    {
+        return toLong(value, null);
+    }
+
+    /**
+     * 转换为double<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Double toDouble(Object value, Double defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Double)
+        {
+            return (Double) value;
+        }
+        if (value instanceof Number)
+        {
+            return ((Number) value).doubleValue();
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            // 支持科学计数法
+            return new BigDecimal(valueStr.trim()).doubleValue();
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为double<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Double toDouble(Object value)
+    {
+        return toDouble(value, null);
+    }
+
+    /**
+     * 转换为Float<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Float toFloat(Object value, Float defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Float)
+        {
+            return (Float) value;
+        }
+        if (value instanceof Number)
+        {
+            return ((Number) value).floatValue();
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            return Float.parseFloat(valueStr.trim());
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为Float<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Float toFloat(Object value)
+    {
+        return toFloat(value, null);
+    }
+
+    /**
+     * 转换为boolean<br>
+     * String支持的值为：true、false、yes、ok、no，1,0 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static Boolean toBool(Object value, Boolean defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof Boolean)
+        {
+            return (Boolean) value;
+        }
+        String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        valueStr = valueStr.trim().toLowerCase();
+        switch (valueStr)
+        {
+            case "true":
+                return true;
+            case "false":
+                return false;
+            case "yes":
+                return true;
+            case "ok":
+                return true;
+            case "no":
+                return false;
+            case "1":
+                return true;
+            case "0":
+                return false;
+            default:
+                return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为boolean<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static Boolean toBool(Object value)
+    {
+        return toBool(value, null);
+    }
+
+    /**
+     * 转换为Enum对象<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     *
+     * @param clazz Enum的Class
+     * @param value 值
+     * @param defaultValue 默认值
+     * @return Enum
+     */
+    public static <E extends Enum<E>> E toEnum(Class<E> clazz, Object value, E defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (clazz.isAssignableFrom(value.getClass()))
+        {
+            @SuppressWarnings("unchecked")
+            E myE = (E) value;
+            return myE;
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            return Enum.valueOf(clazz, valueStr);
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为Enum对象<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<code>null</code><br>
+     *
+     * @param clazz Enum的Class
+     * @param value 值
+     * @return Enum
+     */
+    public static <E extends Enum<E>> E toEnum(Class<E> clazz, Object value)
+    {
+        return toEnum(clazz, value, null);
+    }
+
+    /**
+     * 转换为BigInteger<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static BigInteger toBigInteger(Object value, BigInteger defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof BigInteger)
+        {
+            return (BigInteger) value;
+        }
+        if (value instanceof Long)
+        {
+            return BigInteger.valueOf((Long) value);
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            return new BigInteger(valueStr);
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为BigInteger<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<code>null</code><br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static BigInteger toBigInteger(Object value)
+    {
+        return toBigInteger(value, null);
+    }
+
+    /**
+     * 转换为BigDecimal<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @param defaultValue 转换错误时的默认值
+     * @return 结果
+     */
+    public static BigDecimal toBigDecimal(Object value, BigDecimal defaultValue)
+    {
+        if (value == null)
+        {
+            return defaultValue;
+        }
+        if (value instanceof BigDecimal)
+        {
+            return (BigDecimal) value;
+        }
+        if (value instanceof Long)
+        {
+            return new BigDecimal((Long) value);
+        }
+        if (value instanceof Double)
+        {
+            return new BigDecimal((Double) value);
+        }
+        if (value instanceof Integer)
+        {
+            return new BigDecimal((Integer) value);
+        }
+        final String valueStr = toStr(value, null);
+        if (StringUtils.isEmpty(valueStr))
+        {
+            return defaultValue;
+        }
+        try
+        {
+            return new BigDecimal(valueStr);
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 转换为BigDecimal<br>
+     * 如果给定的值为空，或者转换失败，返回默认值<br>
+     * 转换失败不会报错
+     *
+     * @param value 被转换的值
+     * @return 结果
+     */
+    public static BigDecimal toBigDecimal(Object value)
+    {
+        return toBigDecimal(value, null);
+    }
+
+    /**
+     * 将对象转为字符串<br>
+     * 1、Byte数组和ByteBuffer会被转换为对应字符串的数组 2、对象数组会调用Arrays.toString方法
+     *
+     * @param obj 对象
+     * @return 字符串
+     */
+    public static String utf8Str(Object obj)
+    {
+        return str(obj, CharsetKit.CHARSET_UTF_8);
+    }
+
+    /**
+     * 将对象转为字符串<br>
+     * 1、Byte数组和ByteBuffer会被转换为对应字符串的数组 2、对象数组会调用Arrays.toString方法
+     *
+     * @param obj 对象
+     * @param charsetName 字符集
+     * @return 字符串
+     */
+    public static String str(Object obj, String charsetName)
+    {
+        return str(obj, Charset.forName(charsetName));
+    }
+
+    /**
+     * 将对象转为字符串<br>
+     * 1、Byte数组和ByteBuffer会被转换为对应字符串的数组 2、对象数组会调用Arrays.toString方法
+     *
+     * @param obj 对象
+     * @param charset 字符集
+     * @return 字符串
+     */
+    public static String str(Object obj, Charset charset)
+    {
+        if (null == obj)
+        {
+            return null;
+        }
+
+        if (obj instanceof String)
+        {
+            return (String) obj;
+        }
+        else if (obj instanceof byte[] || obj instanceof Byte[])
+        {
+            return str((Byte[]) obj, charset);
+        }
+        else if (obj instanceof ByteBuffer)
+        {
+            return str((ByteBuffer) obj, charset);
+        }
+        return obj.toString();
+    }
+
+    /**
+     * 将byte数组转为字符串
+     *
+     * @param bytes byte数组
+     * @param charset 字符集
+     * @return 字符串
+     */
+    public static String str(byte[] bytes, String charset)
+    {
+        return str(bytes, StringUtils.isEmpty(charset) ? Charset.defaultCharset() : Charset.forName(charset));
+    }
+
+    /**
+     * 解码字节码
+     *
+     * @param data 字符串
+     * @param charset 字符集，如果此字段为空，则解码的结果取决于平台
+     * @return 解码后的字符串
+     */
+    public static String str(byte[] data, Charset charset)
+    {
+        if (data == null)
+        {
+            return null;
+        }
+
+        if (null == charset)
+        {
+            return new String(data);
+        }
+        return new String(data, charset);
+    }
+
+    /**
+     * 将编码的byteBuffer数据转换为字符串
+     *
+     * @param data 数据
+     * @param charset 字符集，如果为空使用当前系统字符集
+     * @return 字符串
+     */
+    public static String str(ByteBuffer data, String charset)
+    {
+        if (data == null)
+        {
+            return null;
+        }
+
+        return str(data, Charset.forName(charset));
+    }
+
+    /**
+     * 将编码的byteBuffer数据转换为字符串
+     *
+     * @param data 数据
+     * @param charset 字符集，如果为空使用当前系统字符集
+     * @return 字符串
+     */
+    public static String str(ByteBuffer data, Charset charset)
+    {
+        if (null == charset)
+        {
+            charset = Charset.defaultCharset();
+        }
+        return charset.decode(data).toString();
+    }
+
+    // ----------------------------------------------------------------------- 全角半角转换
+    /**
+     * 半角转全角
+     *
+     * @param input String.
+     * @return 全角字符串.
+     */
+    public static String toSBC(String input)
+    {
+        return toSBC(input, null);
+    }
+
+    /**
+     * 半角转全角
+     *
+     * @param input String
+     * @param notConvertSet 不替换的字符集合
+     * @return 全角字符串.
+     */
+    public static String toSBC(String input, Set<Character> notConvertSet)
+    {
+        char c[] = input.toCharArray();
+        for (int i = 0; i < c.length; i++)
+        {
+            if (null != notConvertSet && notConvertSet.contains(c[i]))
+            {
+                // 跳过不替换的字符
+                continue;
+            }
+
+            if (c[i] == ' ')
+            {
+                c[i] = '\u3000';
+            }
+            else if (c[i] < '\177')
+            {
+                c[i] = (char) (c[i] + 65248);
+
+            }
+        }
+        return new String(c);
+    }
+
+    /**
+     * 全角转半角
+     *
+     * @param input String.
+     * @return 半角字符串
+     */
+    public static String toDBC(String input)
+    {
+        return toDBC(input, null);
+    }
+
+    /**
+     * 替换全角为半角
+     *
+     * @param text 文本
+     * @param notConvertSet 不替换的字符集合
+     * @return 替换后的字符
+     */
+    public static String toDBC(String text, Set<Character> notConvertSet)
+    {
+        char c[] = text.toCharArray();
+        for (int i = 0; i < c.length; i++)
+        {
+            if (null != notConvertSet && notConvertSet.contains(c[i]))
+            {
+                // 跳过不替换的字符
+                continue;
+            }
+
+            if (c[i] == '\u3000')
+            {
+                c[i] = ' ';
+            }
+            else if (c[i] > '\uFF00' && c[i] < '\uFF5F')
+            {
+                c[i] = (char) (c[i] - 65248);
+            }
+        }
+        String returnString = new String(c);
+
+        return returnString;
+    }
+
+    /**
+     * 数字金额大写转换 先写个完整的然后将如零拾替换成零
+     *
+     * @param n 数字
+     * @return 中文大写数字
+     */
+    public static String digitUppercase(double n)
+    {
+        String[] fraction = { "角", "分" };
+        String[] digit = { "零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖" };
+        String[][] unit = { { "元", "万", "亿" }, { "", "拾", "佰", "仟" } };
+
+        String head = n < 0 ? "负" : "";
+        n = Math.abs(n);
+
+        String s = "";
+        for (int i = 0; i < fraction.length; i++)
+        {
+            s += (digit[(int) (Math.floor(n * 10 * Math.pow(10, i)) % 10)] + fraction[i]).replaceAll("(零.)+", "");
+        }
+        if (s.length() < 1)
+        {
+            s = "整";
+        }
+        int integerPart = (int) Math.floor(n);
+
+        for (int i = 0; i < unit[0].length && integerPart > 0; i++)
+        {
+            String p = "";
+            for (int j = 0; j < unit[1].length && n > 0; j++)
+            {
+                p = digit[integerPart % 10] + unit[1][j] + p;
+                integerPart = integerPart / 10;
+            }
+            s = p.replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i] + s;
+        }
+        return head + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
+    }
+}
+
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十五步</h3> 在utils包下面新建<text style="font-size:20px;color:red">StrFormatter</text>类  字符串格式化
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code11')" >点击复制</button>
+                        <textarea id="code11">
+package com.example.common.utils;
+
+/**
+ * 字符串格式化
+ *
+ * @author tdys
+ */
+public class StrFormatter
+{
+    public static final String EMPTY_JSON = "{}";
+    public static final char C_BACKSLASH = '\\';
+    public static final char C_DELIM_START = '{';
+    public static final char C_DELIM_END = '}';
+
+    /**
+     * 格式化字符串<br>
+     * 此方法只是简单将占位符 {} 按照顺序替换为参数<br>
+     * 如果想输出 {} 使用 \\转义 { 即可，如果想输出 {} 之前的 \ 使用双转义符 \\\\ 即可<br>
+     * 例：<br>
+     * 通常使用：format("this is {} for {}", "a", "b") -> this is a for b<br>
+     * 转义{}： format("this is \\{} for {}", "a", "b") -> this is \{} for a<br>
+     * 转义\： format("this is \\\\{} for {}", "a", "b") -> this is \a for b<br>
+     *
+     * @param strPattern 字符串模板
+     * @param argArray 参数列表
+     * @return 结果
+     */
+    public static String format(final String strPattern, final Object... argArray)
+    {
+        if (StringUtils.isEmpty(strPattern) || StringUtils.isEmpty(argArray))
+        {
+            return strPattern;
+        }
+        final int strPatternLength = strPattern.length();
+
+        // 初始化定义好的长度以获得更好的性能
+        StringBuilder sbuf = new StringBuilder(strPatternLength + 50);
+
+        int handledPosition = 0;
+        int delimIndex;// 占位符所在位置
+        for (int argIndex = 0; argIndex < argArray.length; argIndex++)
+        {
+            delimIndex = strPattern.indexOf(EMPTY_JSON, handledPosition);
+            if (delimIndex == -1)
+            {
+                if (handledPosition == 0)
+                {
+                    return strPattern;
+                }
+                else
+                { // 字符串模板剩余部分不再包含占位符，加入剩余部分后返回结果
+                    sbuf.append(strPattern, handledPosition, strPatternLength);
+                    return sbuf.toString();
+                }
+            }
+            else
+            {
+                if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == C_BACKSLASH)
+                {
+                    if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == C_BACKSLASH)
+                    {
+                        // 转义符之前还有一个转义符，占位符依旧有效
+                        sbuf.append(strPattern, handledPosition, delimIndex - 1);
+                        sbuf.append(Convert.utf8Str(argArray[argIndex]));
+                        handledPosition = delimIndex + 2;
+                    }
+                    else
+                    {
+                        // 占位符被转义
+                        argIndex--;
+                        sbuf.append(strPattern, handledPosition, delimIndex - 1);
+                        sbuf.append(C_DELIM_START);
+                        handledPosition = delimIndex + 1;
+                    }
+                }
+                else
+                {
+                    // 正常占位符
+                    sbuf.append(strPattern, handledPosition, delimIndex);
+                    sbuf.append(Convert.utf8Str(argArray[argIndex]));
+                    handledPosition = delimIndex + 2;
+                }
+            }
+        }
+        // append the characters following the last {} pair.
+        // 加入最后一个占位符后所有的字符
+        sbuf.append(strPattern, handledPosition, strPattern.length());
+
+        return sbuf.toString();
+    }
+}
+
+
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十六步</h3> 在utils包下面新建<text style="font-size:20px;color:red">StringUtils</text>类  字符串格式化
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code12')" >点击复制</button>
+                        <textarea id="code12">
+package com.example.common.utils;
+
+
+
+import java.util.Collection;
+import java.util.Map;
+
+/**
+ * 字符串工具类
+ *
+ * @author tdys
+ */
+public class StringUtils extends org.apache.commons.lang3.StringUtils
+{
+    /** 空字符串 */
+    private static final String NULLSTR = "";
+
+    /** 下划线 */
+    private static final char SEPARATOR = '_';
+
+    /**
+     * 获取参数不为空值
+     *
+     * @param value defaultValue 要判断的value
+     * @return value 返回值
+     */
+    public static <T> T nvl(T value, T defaultValue)
+    {
+        return value != null ? value : defaultValue;
+    }
+
+    /**
+     * * 判断一个Collection是否为空， 包含List，Set，Queue
+     *
+     * @param coll 要判断的Collection
+     * @return true：为空 false：非空
+     */
+    public static boolean isEmpty(Collection<?> coll)
+    {
+        return isNull(coll) || coll.isEmpty();
+    }
+
+    /**
+     * * 判断一个Collection是否非空，包含List，Set，Queue
+     *
+     * @param coll 要判断的Collection
+     * @return true：非空 false：空
+     */
+    public static boolean isNotEmpty(Collection<?> coll)
+    {
+        return !isEmpty(coll);
+    }
+
+    /**
+     * * 判断一个对象数组是否为空
+     *
+     * @param objects 要判断的对象数组
+     ** @return true：为空 false：非空
+     */
+    public static boolean isEmpty(Object[] objects)
+    {
+        return isNull(objects) || (objects.length == 0);
+    }
+
+    /**
+     * * 判断一个对象数组是否非空
+     *
+     * @param objects 要判断的对象数组
+     * @return true：非空 false：空
+     */
+    public static boolean isNotEmpty(Object[] objects)
+    {
+        return !isEmpty(objects);
+    }
+
+    /**
+     * * 判断一个Map是否为空
+     *
+     * @param map 要判断的Map
+     * @return true：为空 false：非空
+     */
+    public static boolean isEmpty(Map<?, ?> map)
+    {
+        return isNull(map) || map.isEmpty();
+    }
+
+    /**
+     * * 判断一个Map是否为空
+     *
+     * @param map 要判断的Map
+     * @return true：非空 false：空
+     */
+    public static boolean isNotEmpty(Map<?, ?> map)
+    {
+        return !isEmpty(map);
+    }
+
+    /**
+     * * 判断一个字符串是否为空串
+     *
+     * @param str String
+     * @return true：为空 false：非空
+     */
+    public static boolean isEmpty(String str)
+    {
+        return isNull(str) || NULLSTR.equals(str.trim());
+    }
+
+    /**
+     * * 判断一个字符串是否为非空串
+     *
+     * @param str String
+     * @return true：非空串 false：空串
+     */
+    public static boolean isNotEmpty(String str)
+    {
+        return !isEmpty(str);
+    }
+
+    /**
+     * * 判断一个对象是否为空
+     *
+     * @param object Object
+     * @return true：为空 false：非空
+     */
+    public static boolean isNull(Object object)
+    {
+        return object == null;
+    }
+
+    /**
+     * * 判断一个对象是否非空
+     *
+     * @param object Object
+     * @return true：非空 false：空
+     */
+    public static boolean isNotNull(Object object)
+    {
+        return !isNull(object);
+    }
+
+    /**
+     * * 判断一个对象是否是数组类型（Java基本型别的数组）
+     *
+     * @param object 对象
+     * @return true：是数组 false：不是数组
+     */
+    public static boolean isArray(Object object)
+    {
+        return isNotNull(object) && object.getClass().isArray();
+    }
+
+    /**
+     * 去空格
+     */
+    public static String trim(String str)
+    {
+        return (str == null ? "" : str.trim());
+    }
+
+    /**
+     * 截取字符串
+     *
+     * @param str 字符串
+     * @param start 开始
+     * @return 结果
+     */
+    public static String substring(final String str, int start)
+    {
+        if (str == null)
+        {
+            return NULLSTR;
+        }
+
+        if (start < 0)
+        {
+            start = str.length() + start;
+        }
+
+        if (start < 0)
+        {
+            start = 0;
+        }
+        if (start > str.length())
+        {
+            return NULLSTR;
+        }
+
+        return str.substring(start);
+    }
+
+    /**
+     * 截取字符串
+     *
+     * @param str 字符串
+     * @param start 开始
+     * @param end 结束
+     * @return 结果
+     */
+    public static String substring(final String str, int start, int end)
+    {
+        if (str == null)
+        {
+            return NULLSTR;
+        }
+
+        if (end < 0)
+        {
+            end = str.length() + end;
+        }
+        if (start < 0)
+        {
+            start = str.length() + start;
+        }
+
+        if (end > str.length())
+        {
+            end = str.length();
+        }
+
+        if (start > end)
+        {
+            return NULLSTR;
+        }
+
+        if (start < 0)
+        {
+            start = 0;
+        }
+        if (end < 0)
+        {
+            end = 0;
+        }
+
+        return str.substring(start, end);
+    }
+
+    /**
+     * 格式化文本, {} 表示占位符<br>
+     * 此方法只是简单将占位符 {} 按照顺序替换为参数<br>
+     * 如果想输出 {} 使用 \\转义 { 即可，如果想输出 {} 之前的 \ 使用双转义符 \\\\ 即可<br>
+     * 例：<br>
+     * 通常使用：format("this is {} for {}", "a", "b") -> this is a for b<br>
+     * 转义{}： format("this is \\{} for {}", "a", "b") -> this is \{} for a<br>
+     * 转义\： format("this is \\\\{} for {}", "a", "b") -> this is \a for b<br>
+     *
+     * @param template 文本模板，被替换的部分用 {} 表示
+     * @param params 参数值
+     * @return 格式化后的文本
+     */
+    public static String format(String template, Object... params)
+    {
+        if (isEmpty(params) || isEmpty(template))
+        {
+            return template;
+        }
+        return StrFormatter.format(template, params);
+    }
+
+    /**
+     * 下划线转驼峰命名
+     */
+    public static String toUnderScoreCase(String str)
+    {
+        if (str == null)
+        {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        // 前置字符是否大写
+        boolean preCharIsUpperCase = true;
+        // 当前字符是否大写
+        boolean curreCharIsUpperCase = true;
+        // 下一字符是否大写
+        boolean nexteCharIsUpperCase = true;
+        for (int i = 0; i < str.length(); i++)
+        {
+            char c = str.charAt(i);
+            if (i > 0)
+            {
+                preCharIsUpperCase = Character.isUpperCase(str.charAt(i - 1));
+            }
+            else
+            {
+                preCharIsUpperCase = false;
+            }
+
+            curreCharIsUpperCase = Character.isUpperCase(c);
+
+            if (i < (str.length() - 1))
+            {
+                nexteCharIsUpperCase = Character.isUpperCase(str.charAt(i + 1));
+            }
+
+            if (preCharIsUpperCase && curreCharIsUpperCase && !nexteCharIsUpperCase)
+            {
+                sb.append(SEPARATOR);
+            }
+            else if ((i != 0 && !preCharIsUpperCase) && curreCharIsUpperCase)
+            {
+                sb.append(SEPARATOR);
+            }
+            sb.append(Character.toLowerCase(c));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 是否包含字符串
+     *
+     * @param str 验证字符串
+     * @param strs 字符串组
+     * @return 包含返回true
+     */
+    public static boolean inStringIgnoreCase(String str, String... strs)
+    {
+        if (str != null && strs != null)
+        {
+            for (String s : strs)
+            {
+                if (str.equalsIgnoreCase(trim(s)))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。 例如：HELLO_WORLD->HelloWorld
+     *
+     * @param name 转换前的下划线大写方式命名的字符串
+     * @return 转换后的驼峰式命名的字符串
+     */
+    public static String convertToCamelCase(String name)
+    {
+        StringBuilder result = new StringBuilder();
+        // 快速检查
+        if (name == null || name.isEmpty())
+        {
+            // 没必要转换
+            return "";
+        }
+        else if (!name.contains("_"))
+        {
+            // 不含下划线，仅将首字母大写
+            return name.substring(0, 1).toUpperCase() + name.substring(1);
+        }
+        // 用下划线将原始字符串分割
+        String[] camels = name.split("_");
+        for (String camel : camels)
+        {
+            // 跳过原始字符串中开头、结尾的下换线或双重下划线
+            if (camel.isEmpty())
+            {
+                continue;
+            }
+            // 首字母大写
+            result.append(camel.substring(0, 1).toUpperCase());
+            result.append(camel.substring(1).toLowerCase());
+        }
+        return result.toString();
+    }
+}
+
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十七步</h3> 在java类下面新建<text style="font-size:20px;color:red">project</text>包，所有的业务模块都要放到project下面，因为Mybatis会扫描project下的mapper下面的文件
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十八步</h3> 在project下新建 <text style="font-size:20px;color:red">user</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第十九步</h3> 在user包下面新建<text style="font-size:20px;color:red">entity</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十步</h3> 在entity包下面新建<text style="font-size:20px;color:red">User</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code13')" >点击复制</button>
+                        <textarea id="code13">
+package com.example.project.user.entity;
+
+import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.example.common.entity.BaseEntity;
+import lombok.Data;
+
+/**
+ * <p>
+ * 用户表
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Data
+@TableName("sys_user")
+public class User extends BaseEntity {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "user_id", type = IdType.AUTO)
+    private Integer userId;
+    /**
+     * 账号名称
+     */
+    private String username;
+    /**
+     * 账号密码
+     */
+    private String password;
+    /**
+     * 加盐
+     */
+    private String salt;
+    /**
+     * 用户名称
+     */
+    private String name;
+    /**
+     * 状态
+     */
+    private Integer status;
+
+
+}
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十一步</h3> 在user包下面新建<text style="font-size:20px;color:red">mapper</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十二步</h3> 在mapper包下新键<text style="font-size:20px;color:red">UserMapper</text>类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code14')" >点击复制</button>
+                        <textarea id="code14">
+package com.example.project.user.mapper;
+
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.example.project.user.entity.User;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 用户表 Mapper 接口
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+public interface UserMapper extends BaseMapper<User> {
+
+    public List<User> selectUserListPage(User user);
+
+}
+                        </textarea>
+
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十三步</h3> 在user包下面新建<text style="font-size:20px;color:red">service</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十四步</h3> 在service包下面新建<text style="font-size:20px;color:red">impl</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十五步</h3> 在impl包下面新键<text style="font-size:20px;color:red">UserServiceImpl</text>类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code15')" >点击复制</button>
+                        <textarea id="code15">
+package com.example.project.user.service.impl;
+
+
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.example.project.user.entity.User;
+import com.example.project.user.mapper.UserMapper;
+import com.example.project.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 用户表 服务实现类
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Service
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public List<User> selectUserListPage(User user) {
+        return userMapper.selectUserListPage(user);
+    }
+}
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十六步</h3> 在service包下面新建<text style="font-size:20px;color:red">UserService</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code16')" >点击复制</button>
+                        <textarea id="code16">
+package com.example.project.user.service;
+
+
+import com.baomidou.mybatisplus.service.IService;
+import com.example.project.user.entity.User;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 用户表 服务类
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+public interface UserService extends IService<User> {
+
+    /**
+     * 查询用户列表
+     *
+     * @param user 用户信息
+     * @return 用户集合
+     */
+    public List<User> selectUserListPage(User user);
+
+}
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十七步</h3> 在user包下面新建<text style="font-size:20px;color:red">controller</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十八步</h3> 在controller包下面新建<text style="font-size:20px;color:red">UserController</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code17')" >点击复制</button>
+                        <textarea id="code17">
+package com.example.project.user.controller;
+
+
+import com.example.common.entity.AjaxResult;
+import com.example.common.entity.BaseController;
+import com.example.common.entity.TableDataInfo;
+import com.example.common.shiro.ShiroUtils;
+import com.example.project.user.entity.User;
+import com.example.project.user.service.UserService;
+import com.github.pagehelper.PageHelper;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * <p>
+ * 用户表 前端控制器
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Controller
+@RequestMapping("/user")
+public class UserController extends BaseController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping()
+    public String user()
+    {
+        return "user/user";
+    }
+
+    @GetMapping("/add")
+    public String add()
+    {
+        return "user/add";
+    }
+
+    @GetMapping("/edit")
+    public String edit(Integer id, ModelMap mmap)
+    {
+        mmap.put("user",userService.selectById(id));
+        return "user/edit";
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult add(User user)
+    {
+        user.setCreateTime(new Date());
+        user.setPassword(ShiroUtils.sha256(user.getPassword(),user.getUsername()));
+        return toAjax(userService.insert(user));
+    }
+
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult edit(User user)
+    {
+       user.setUpdateTime(new Date());
+       return toAjax(userService.updateById(user));
+    }
+
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(Integer id)
+    {
+        return toAjax(userService.deleteById(id));
+    }
+
+    /**
+     * 查询用户列表
+     * @return
+     */
+    @RequiresPermissions("system:user:list")
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo apiList(User user)
+    {
+        PageHelper.startPage(user.getPageNum(),user.getPageSize());
+        List<User> list = userService.selectUserListPage(user);
+        return getDataTable(list);
+
+    }
+
+    @GetMapping("/test")
+    @RequiresPermissions("user:test")
+    public String test()
+    {
+        return "test";
+    }
+}
+
+
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第二十九步</h3> 在resources包下面新建<text style="font-size:20px;color:red">mapper</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十步</h3> 在mapper包下面新建<text style="font-size:20px;color:red">UserMapper.xml</text> xml
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code18')" >点击复制</button>
+                        <textarea id="code18">
+<?xml version="1.0" encoding="UTF-8"?>
+                            <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.user.mapper.UserMapper">
+
+    <select id="selectUserListPage" parameterType="User" resultType="User">
+        select user_id, username, password, salt, name, status, create_by, create_time, update_time
+        from sys_user
+        <where>
+            <if test="username != null and username != ''">
+                and username like concat('%', #{username}, '%')
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+</mapper>
+
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十一步</h3> 在project包下面新建<text style="font-size:20px;color:red">menu</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十二步</h3> 在menu包下面分别新建<text style="font-size:20px;color:red">entity</text> 类
+                        <text style="font-size:20px;color:red">mapper</text> 类
+                        <text style="font-size:20px;color:red">service</text> 类
+                        <text style="font-size:20px;color:red">controller</text> 类
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十三步</h3> 在menu.service包下面新建<text style="font-size:20px;color:red">impl</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十四步</h3> 在entity包下面新建<text style="font-size:20px;color:red">Menu</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code19')" >点击复制</button>
+                        <textarea id="code19">
+package com.example.project.menu.entity;
+
+import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.example.common.entity.BaseEntity;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * <p>
+ * 菜单名称
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Data
+@TableName("sys_menu")
+public class Menu extends BaseEntity {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 菜单id
+     */
+    @TableId(value = "menu_id", type = IdType.AUTO)
+    private Integer menuId;
+    /**
+     * 菜单父id
+     */
+    @TableField("parent_id")
+    private Integer parentId;
+    /**
+     * 名称
+     */
+    private String name;
+    /**
+     * 路径
+     */
+    private String url;
+    /**
+     * 权限标识
+     */
+    private String authority;
+    /**
+     * 类型
+     */
+    private Integer type;
+    /**
+     * 图标
+     */
+    private String icon;
+
+    @TableField(exist = false)
+    private List<Menu> children;
+
+
+
+}
+
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十五步</h3> 在mapper包下面新建<text style="font-size:20px;color:red">MenuMapper</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code20')" >点击复制</button>
+                        <textarea id="code20">
+package com.example.project.menu.mapper;
+
+import com.example.project.menu.entity.Menu;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 菜单名称 Mapper 接口
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+public interface MenuMapper extends BaseMapper<Menu> {
+
+    public List<Menu> findByRoleId(Integer roleId);
+
+    public List<Menu> selectMenuListPage(Menu menu);
+
+}
+
+
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十六步</h3> 在service包下面新建<text style="font-size:20px;color:red">MenuService</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code21')" >点击复制</button>
+                        <textarea id="code21">
+package com.example.project.menu.service;
+
+import com.example.project.menu.entity.Menu;
+import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 菜单名称 服务类
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+public interface MenuService extends IService<Menu> {
+
+    public List<Menu> findByRoleId(Integer roleId);
+
+    /**
+     * 查询菜单列表
+     *
+     * @param menu 菜单信息
+     * @return 菜单集合
+     */
+    public List<Menu> selectMenuListPage(Menu menu);
+
+    public List<Menu> buildTree(List<Menu> mapList, String value);
+
+}
+
+
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十七步</h3> 在service.impl包下面新建<text style="font-size:20px;color:red">MenuServiceImpl</text> 类   复制把buildTree方法放开
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code22')" >点击复制</button>
+                        <textarea id="code22">
+package com.example.project.menu.service.impl;
+
+import com.example.project.menu.entity.Menu;
+import com.example.project.menu.mapper.MenuMapper;
+import com.example.project.menu.service.MenuService;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * <p>
+ * 菜单名称 服务实现类
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Service
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
+
+    @Autowired
+    private MenuMapper menuMapper;
+
+    @Override
+    public List<Menu> findByRoleId(Integer roleId) {
+        return menuMapper.findByRoleId(roleId);
+    }
+
+    @Override
+    public List<Menu> selectMenuListPage(Menu menu) {
+        return menuMapper.selectMenuListPage(menu);
+    }
+
+    /**
+     * 递归列表
+     *
+     */
+    <!--public List<Menu> buildTree(List<Menu> mapList, String value) {
+        int size = 0;
+        for (Menu menu : mapList) {
+            if (!"0".equals(value) && value.equals(menu.getParentId().toString())) {
+                size++;
+            }
+        }
+        if (!"0".equals(value) && size == 0) {
+            return new ArrayList<>();
+        }
+        List<Menu> list = new ArrayList<>();
+        for (Menu menu : mapList) {
+            if (value.equals(menu.getParentId().toString())) {
+                Menu children = new Menu();
+                children.setMenuId(menu.getMenuId());
+                children.setName(menu.getName());
+                children.setUrl(menu.getUrl());
+                List<Menu> listNode = new ArrayList<>();
+                if (value.equals(menu.getParentId().toString())) {
+                    listNode = buildTree(mapList, String.valueOf(menu.getMenuId()));
+                }
+                children.setChildren(listNode);
+                list.add(children);
+            }
+        }
+        return list;
+    }-->
+}
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十八步</h3> 在controller包下面新建<text style="font-size:20px;color:red">MenuController</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code23')" >点击复制</button>
+                        <textarea id="code23">
+package com.example.project.menu.controller;
+
+
+import com.example.common.entity.AjaxResult;
+import com.example.common.entity.BaseController;
+import com.example.project.menu.entity.Menu;
+import com.example.project.menu.service.MenuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * <p>
+ * 菜单名称 前端控制器
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Controller
+@RequestMapping("/menu")
+public class MenuController extends BaseController {
+
+    @Autowired
+    private MenuService menuService;
+
+    @GetMapping()
+    public String menu()
+    {
+        return "menu/menu";
+    }
+
+    @GetMapping("/add")
+    public String add(Integer id, ModelMap mmap)
+    {
+        mmap.put("id",id);
+        return "menu/add";
+    }
+
+    @GetMapping("/edit")
+    public String edit(Integer id, ModelMap mmap)
+    {
+        mmap.put("menu",menuService.selectById(id));
+        return "menu/edit";
+    }
+
+
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult add(Menu menu)
+    {
+        menu.setCreateTime(new Date());
+        return toAjax(menuService.insert(menu));
+    }
+
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult edit(Menu menu)
+    {
+        menu.setUpdateTime(new Date());
+        return toAjax(menuService.updateById(menu));
+    }
+
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(Integer id)
+    {
+        return toAjax(menuService.deleteById(id));
+    }
+
+    /**
+     * 查询菜单列表
+     * @return
+     */
+    @GetMapping("/list")
+    @ResponseBody
+    public List<Menu> apiList(Menu menu)
+    {
+        List<Menu> menuList = menuService.selectMenuListPage(menu);
+        return menuList;
+
+    }
+
+}
+
+
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第三十九步</h3> 在project包下面新建<text style="font-size:20px;color:red">role</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十步</h3> 在role包下面分别新建<text style="font-size:20px;color:red">entity</text> 类
+                        <text style="font-size:20px;color:red">mapper</text> 类
+                        <text style="font-size:20px;color:red">service</text> 类
+                        <text style="font-size:20px;color:red">controller</text> 类
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十一步</h3> 在role.service包下面新建<text style="font-size:20px;color:red">impl</text> 包
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十二步</h3> 在entity包下面新建<text style="font-size:20px;color:red">Role</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code24')" >点击复制</button>
+                        <textarea id="code24">
+package com.example.project.role.entity;
+import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.example.common.entity.BaseEntity;
+import lombok.Data;
+
+import java.io.Serializable;
+
+/**
+ * <p>
+ * 角色表
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Data
+@TableName("sys_role")
+public class Role extends BaseEntity {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 角色id
+     */
+    @TableId(value = "role_id", type = IdType.AUTO)
+    private Integer roleId;
+    /**
+     * 角色名称
+     */
+    @TableField("role_name")
+    private String roleName;
+    /**
+     * 备注
+     */
+    private String remark;
+
+}
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十三步</h3> 在mapper包下面新建<text style="font-size:20px;color:red">RoleMapper</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code25')" >点击复制</button>
+                        <textarea id="code25">
+package com.example.project.role.mapper;
+
+import com.example.project.role.entity.Role;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 角色表 Mapper 接口
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+public interface RoleMapper extends BaseMapper<Role> {
+
+    public List<Role> findByUserId(Integer userId);
+
+}
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十四步</h3> 在service.impl包下面新建<text style="font-size:20px;color:red">RoleServiceImpl</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code26')" >点击复制</button>
+                        <textarea id="code26">
+package com.example.project.role.service.impl;
+
+import com.example.project.role.entity.Role;
+import com.example.project.role.mapper.RoleMapper;
+import com.example.project.role.service.RoleService;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 角色表 服务实现类
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Service
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Override
+    public List<Role> findByUserId(Integer userId) {
+        return roleMapper.findByUserId(userId);
+    }
+}
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十五步</h3> 在service包下面新建<text style="font-size:20px;color:red">RoleService</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code27')" >点击复制</button>
+                        <textarea id="code27">
+package com.example.project.role.service;
+
+import com.example.project.role.entity.Role;
+import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 角色表 服务类
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+public interface RoleService extends IService<Role> {
+
+
+    public List<Role> findByUserId(Integer userId);
+
+}
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十六步</h3> 在controller包下面新建<text style="font-size:20px;color:red">RoleController</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code28')" >点击复制</button>
+                        <textarea id="code28">
+package com.example.project.role.controller;
+
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.stereotype.Controller;
+
+/**
+ * <p>
+ * 角色表 前端控制器
+ * </p>
+ *
+ * @author wanganhui
+ * @since 2021-01-20
+ */
+@Controller
+@RequestMapping("/role")
+public class RoleController {
+
+}
+
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十七步</h3> 在resources.mapper包下面新建<text style="font-size:20px;color:red">MenuMapper.xml</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code29')" >点击复制</button>
+                        <textarea id="code29">
+<?xml version="1.0" encoding="UTF-8"?>
+                            <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.menu.mapper.MenuMapper">
+
+
+    <select id="findByRoleId" parameterType="Integer" resultType="Menu">
+        select
+           m.menu_id, m.parent_id, m.name, m.url, m.authority, m.type, m.icon, m.create_time, m.update_time
+        from
+        sys_menu as m
+        left join sys_role_menu as rm on m.menu_id = rm.menu_id
+        and rm.role_id = #{roleId}
+    </select>
+
+    <select id="selectMenuListPage" parameterType="Menu" resultType="Menu">
+        select m.menu_id, m.parent_id, m.name, m.url, m.authority, m.type, m.icon, m.create_time, m.update_time
+        from sys_menu as m
+        <where>
+            <if test="name != null and name != ''">
+                and m.name like concat('%', #{name}, '%')
+            </if>
+            <if test="type != null and type != ''">
+                and m.type = #{type}
+            </if>
+            <if test="menuId != null and menuId != ''">
+                and m.menu_id = #{menuId}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+
+                        </textarea>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十八步</h3> 在resources.mapper包下面新建<text style="font-size:20px;color:red">RoleMapper.xml</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code30')" >点击复制</button>
+                        <textarea id="code30">
+<?xml version="1.0" encoding="UTF-8"?>
+                            <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.role.mapper.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.project.role.entity.Role">
+        <id column="role_id" property="roleId" />
+        <result column="role_name" property="roleName" />
+        <result column="remark" property="remark" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        role_id AS roleId, role_name AS roleName, remark, create_by AS createBy, create_time AS createTime, update_time AS updateTime
+    </sql>
+
+    <select id="findByUserId" parameterType="Integer" resultType="Role">
+        SELECT
+            r.role_id,
+            r.role_name,
+            r.remark,
+            r.create_by,
+            r.create_time,
+            r.update_time
+        FROM
+            sys_role r
+            LEFT JOIN sys_user_role ur ON ur.user_id = #{userId}
+    </select>
+
+</mapper>
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第四十九步</h3> 在common.config包下面新建<text style="font-size:20px;color:red">WebConfig</text> 类   拦截配置
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code31')" >点击复制</button>
+                        <textarea id="code31">
+package com.example.common.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.web.servlet.config.annotation.*;
+
+@Configuration
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+
+    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+
+            "classpath:/META-INF/resources/", "classpath:/resources/",
+            "classpath:/static/", "classpath:/public/" };
+
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.defaultContentType(MediaType.APPLICATION_JSON);
+    }
+
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("http://localhost:9002")
+                .allowCredentials(true).allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH").maxAge(3600);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        if (!registry.hasMappingForPattern("/webjars/**")) {
+
+            registry.addResourceHandler("/webjars/**").addResourceLocations(
+                    "classpath:/META-INF/resources/webjars/");
+        }
+        if (!registry.hasMappingForPattern("/**")) {
+
+            registry.addResourceHandler("/**").addResourceLocations(
+                    CLASSPATH_RESOURCE_LOCATIONS);
+        }
+
+    }
+}
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十步</h3> 在common.config包下面新建<text style="font-size:20px;color:red">ShiroConfig</text> 类  权限配置
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code32')" >点击复制</button>
+                        <textarea id="code32">
+<!--package com.example.common.config;
+
+import com.example.common.shiro.MySessionManager;
+import com.example.common.shiro.ShiroRealm;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * @Author: qiuwei@19pay.com.cn
+ * @Version 1.0.0
+ */
+@Configuration
+
+@Slf4j
+@Data
+@ConfigurationProperties(prefix = "spring.redis")
+public class ShiroConfig {
+
+    private String host = "127.0.0.1:6379";
+
+    /**
+     * Filter工厂，设置对应的过滤条件和跳转条件
+     *
+     * @return ShiroFilterFactoryBean
+     */
+    @Bean
+    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
+
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+
+        // 过滤器链定义映射
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+
+        /*
+         * anon:所有url都都可以匿名访问，authc:所有url都必须认证通过才可以访问;
+         * 过滤链定义，从上向下顺序执行，authc 应放在 anon 下面
+         * */
+        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/", "anon");
+        filterChainDefinitionMap.put("/api/**", "anon");
+        // 配置不会被拦截的链接 顺序判断，如果前端模板采用了thymeleaf，这里不能直接使用 ("/static/**", "anon")来配置匿名访问，必须配置到每个静态目录
+        filterChainDefinitionMap.put("/favicon.ico**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/fonts/**", "anon");
+        filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/html/**", "anon");
+        filterChainDefinitionMap.put("/appSystem/**", "anon");
+        // 所有url都必须认证通过才可以访问
+        filterChainDefinitionMap.put("/**", "authc");
+
+        // 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了, 位置放在 anon、authc下面
+        filterChainDefinitionMap.put("/logout", "logout");
+
+        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
+        // 配器shirot认登录累面地址，前后端分离中登录累面跳转应由前端路由控制，后台仅返回json数据, 对应LoginController中unauth请求
+        shiroFilterFactoryBean.setLoginUrl("/un_auth");
+
+        // 登录成功后要跳转的链接, 此项目是前后端分离，故此行注释掉，登录成功之后返回用户基本信息及token给前端
+        // shiroFilterFactoryBean.setSuccessUrl("/index");
+
+        // 未授权界面, 对应LoginController中 unauthorized 请求
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        return shiroFilterFactoryBean;
+    }
+
+
+    /**
+     * RedisSessionDAO shiro sessionDao层的实现 通过redis, 使用的是shiro-redis插件
+     *
+     * @return RedisSessionDAO
+     */
+    @Bean
+    public RedisSessionDAO redisSessionDAO() {
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(redisManager());
+        redisSessionDAO.setSessionIdGenerator(sessionIdGenerator());
+        redisSessionDAO.setExpire(1800);
+        return redisSessionDAO;
+    }
+
+
+    /**
+     * Session ID 生成器
+     *
+     * @return JavaUuidSessionIdGenerator
+     */
+    @Bean
+    public JavaUuidSessionIdGenerator sessionIdGenerator() {
+        return new JavaUuidSessionIdGenerator();
+    }
+
+    /**
+     * 自定义sessionManager
+     *
+     * @return SessionManager
+     */
+    @Bean
+    public SessionManager sessionManager() {
+        MySessionManager mySessionManager = new MySessionManager();
+        mySessionManager.setSessionDAO(redisSessionDAO());
+        return mySessionManager;
+    }
+
+    /**
+     * 配置shiro redisManager, 使用的是shiro-redis插件
+     *
+     * @return RedisManager
+     */
+    private RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(host);
+        return redisManager;
+    }
+
+    /**
+     * cacheManager 缓存 redis实现, 使用的是shiro-redis插件
+     *
+     * @return RedisCacheManager
+     */
+    @Bean
+    public RedisCacheManager cacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        // 必须要设置主键名称，shiro-redis 插件用过这个缓存用户信息
+        redisCacheManager.setPrincipalIdFieldName("userId");
+        return redisCacheManager;
+    }
+
+
+    /**
+     *  权限管理，配置主要是Realm的管理认证
+     *
+     * @return SecurityManager
+     */
+    @Bean
+    public SecurityManager securityManager(ShiroRealm shiroRealm) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(shiroRealm);
+        // 自定义session管理 使用redis
+        securityManager.setSessionManager(sessionManager());
+        // 自定义缓存实现 使用redis
+        securityManager.setCacheManager(cacheManager());
+        return securityManager;
+    }
+
+
+    /*
+     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能
+     */
+    @Bean
+    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        advisorAutoProxyCreator.setProxyTargetClass(true);
+        return advisorAutoProxyCreator;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+
+    @Bean
+    public SimpleCookie cookie() {
+        // cookie的name,对应的默认是 JSESSIONID
+        SimpleCookie cookie = new SimpleCookie("SHARE_JSESSIONID");
+        cookie.setHttpOnly(true);
+        //  path为 / 用于多个系统共享 JSESSIONID
+        cookie.setPath("/");
+        return cookie;
+    }
+
+}-->
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十一步</h3> 在common.config包下面新建<text style="font-size:20px;color:red">SpringUtil</text> 类  Spring上下文工具类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code33')" >点击复制</button>
+                        <textarea id="code33">
+package com.example.common.config;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+
+/**
+ * @Description Spring上下文工具类
+ */
+@Component
+public class SpringUtil implements ApplicationContextAware {
+    private static ApplicationContext context;
+    /**
+     * Spring在bean初始化后会判断是不是ApplicationContextAware的子类
+     * 如果该类是,setApplicationContext()方法,会将容器中ApplicationContext作为参数传入进去
+     */
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        context = applicationContext;
+    }
+    /**
+     * 通过Name返回指定的Bean
+     */
+    public static <T> T getBean(Class<T> beanClass) {
+        return context.getBean(beanClass);
+    }
+}
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十二步</h3> 在common包下面新建<text style="font-size:20px;color:red">shiro</text> 包  权限管理
+                        </p>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十三步</h3> 在shiro包下面新建<text style="font-size:20px;color:red">MySessionManager</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code34')" >点击复制</button>
+                        <textarea id="code34">
+package com.example.common.shiro;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.apache.shiro.web.util.WebUtils;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.Serializable;
+
+/**
+ *
+ * @Author:
+ * @Version
+ *
+ * 自定义session管理
+ * <br/>
+ * 传统结构项目中，shiro从cookie中读取sessionId以此来维持会话，在前后端分离的项目中（也可在移动APP项目使用），
+ * 我们选择在ajax的请求头中传递sessionId，因此需要重写shiro获取sessionId的方式。
+ * 自定义MySessionManager类继承DefaultWebSessionManager类，重写getSessionId方法
+ */
+
+public class MySessionManager extends DefaultWebSessionManager {
+
+    private static final String token = "token";
+
+    private static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
+
+    @Override
+    protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
+        String id = WebUtils.toHttp(request).getHeader(token);
+        //如果请求头中有 toke 则其值为sessionId
+        if (!StringUtils.isEmpty(id)) {
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, REFERENCED_SESSION_ID_SOURCE);
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, id);
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
+            return id;
+        } else {
+            //否则按默认规则从cookie取sessionId
+            return super.getSessionId(request, response);
+        }
+    }
+
+}
+
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十四步</h3> 在shiro包下面新建<text style="font-size:20px;color:red">ShiroRealm</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code35')" >点击复制</button>
+                        <textarea id="code35">
+<!--package com.example.common.shiro;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.example.project.menu.entity.Menu;
+import com.example.project.menu.service.MenuService;
+import com.example.project.role.entity.Role;
+import com.example.project.role.service.RoleService;
+import com.example.project.user.entity.User;
+import com.example.project.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * @Author:
+ * @Version 1.0.0
+ */
+@Slf4j
+@Component
+public class ShiroRealm extends AuthorizingRealm {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private MenuService menuService;
+    /**
+     * 授权
+     *
+     * @param principalCollection
+     * @return
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+
+        log.info("开始执行授权操作.......");
+
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+
+        /**
+         * 查询用户角色
+         * 如果身份认证的时候没有传入User对象，这里只能取到userName
+         * 也就是SimpleAuthenticationInfo构造的时候第一个参数传递需要User对象
+         */
+        User user = (User) principalCollection.getPrimaryPrincipal();
+
+        if (user == null) {
+            log.error("用户不存在");
+            throw new UnknownAccountException("用户不存在");
+        }
+        //TODO 是否为超级管理员   是  全部菜单权限
+
+        /**
+         * 查询用户角色
+         */
+        List<Role> roles = roleService.findByUserId(user.getUserId());
+        if(CollectionUtils.isNotEmpty(roles)){
+            for (Role role : roles) {
+                authorizationInfo.addRole(role.getRemark());
+                // 根据角色查询权限
+                List<Menu> menus = menuService.findByRoleId(role.getRoleId());
+                for (Menu m : menus) {
+                    authorizationInfo.addStringPermission(m.getAuthority());
+                }
+            }
+        }
+
+        return authorizationInfo;
+    }
+
+
+    /**
+     * 认证
+     *
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+
+        log.info("开始进行身份认证......");
+        UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
+
+        //通过username从数据库中查找 User对象.
+        //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
+        EntityWrapper<User> wrapper  = new EntityWrapper<>();
+        wrapper.eq("username",upToken.getUsername());
+        User user = userService.selectOne(wrapper);
+        if (Objects.isNull(user)) {
+            return null;
+        }
+
+        return new SimpleAuthenticationInfo(user,user.getPassword(),ByteSource.Util.bytes(user.getUsername()),getName());
+    }
+
+
+    /**
+     * 将自己的验证方式加入容器
+     *
+     * 凭证匹配器（由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了）
+     *
+     * @param credentialsMatcher
+     */
+    @Override
+    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+
+        /**
+         * 散列算法:这里可以使用MD5算法 也可以使用SHA-256
+         */
+        hashedCredentialsMatcher.setHashAlgorithmName(ShiroUtils.hashAlgorithmName);
+        /**
+         * 散列的次数，比如散列2次，相当于 md5(md5(""));
+         */
+        hashedCredentialsMatcher.setHashIterations(ShiroUtils.hashIterations);
+        super.setCredentialsMatcher(hashedCredentialsMatcher);
+    }
+
+}-->
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十五步</h3> 在shiro包下面新建<text style="font-size:20px;color:red">ShiroUtils</text> 类
+                        </p>
+                        <button type="button" class="btn btn-danger btn-xs"  onclick="copyss('code36')" >点击复制</button>
+                        <textarea id="code36">
+package com.example.common.shiro;
+
+
+import com.example.project.user.entity.User;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+
+/**
+ * Shiro工具类
+ */
+public class ShiroUtils {
+    /**  加密算法 */
+    public final static String hashAlgorithmName = "SHA-256";
+    /**  循环次数 */
+    public final static int hashIterations = 16;
+
+    public static String sha256(String password, String salt) {
+        return new SimpleHash(hashAlgorithmName, password, salt, hashIterations).toString();
+
+    }
+
+    // 获取一个测试账号 admin
+    public static void main(String[] args) {
+        //29c67a30398638269fe600f73a054934
+
+        // 3743a4c09a17e6f2829febd09ca54e627810001cf255ddcae9dabd288a949c4a
+        System.out.println(sha256("123456","zhangsan")) ;
+//        System.out.println(encryptPassword("admin", "admin123", "111111"));
+    }
+
+    public static String encryptPassword(String username, String password, String salt)
+    {
+        return new Md5Hash(username + password + salt).toHex().toString();
+    }
+
+    /**
+     * 获取会话
+     */
+    public static Session getSession() {
+        return SecurityUtils.getSubject().getSession();
+    }
+
+    /**
+     * Subject：主体，代表了当前“用户”
+     */
+    public static Subject getSubject() {
+        return SecurityUtils.getSubject();
+    }
+
+    public static User getUserEntity() {
+        return (User)SecurityUtils.getSubject().getPrincipal();
+    }
+
+    public static Integer getUserId() {
+        return getUserEntity().getUserId();
+    }
+
+    public static void setSessionAttribute(Object key, Object value) {
+        getSession().setAttribute(key, value);
+    }
+
+    public static Object getSessionAttribute(Object key) {
+        return getSession().getAttribute(key);
+    }
+
+    public static boolean isLogin() {
+        return SecurityUtils.getSubject().getPrincipal() != null;
+    }
+
+    public static void logout() {
+        SecurityUtils.getSubject().logout();
+    }
+}
+                        </textarea>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十六步</h3>
+                        下载静态资源文件
+                        <a href="https://severfile.oss-cn-beijing.aliyuncs.com/static.zip?Expires=1611629282&OSSAccessKeyId=TMP.3KgnCfcNFSk5bK2xarr82v7BAtRB1zEk7mvrSsm4sttBpDZbFib8bYFzJTKNAxNpWDX2dTHmfpKmdDyPjRvmQ8GAXdMua5&Signature=n4lZlB84TH2YelKUQ9wRqlWsQac%3D&versionId=CAEQDxiBgMCx9rjxuRciIDRmYjdmNWRiZmQ2YzRiNWViNWMzNmJiN2RjZGFiMzFh&response-content-type=application%2Foctet-stream">static.zip</a>
+                        下载下来解压以后放到resources.static目录下
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十七步</h3>
+                        下载前端页面文件
+                        <a href="https://severfile.oss-cn-beijing.aliyuncs.com/templates.zip?Expires=1611629480&OSSAccessKeyId=TMP.3KgnCfcNFSk5bK2xarr82v7BAtRB1zEk7mvrSsm4sttBpDZbFib8bYFzJTKNAxNpWDX2dTHmfpKmdDyPjRvmQ8GAXdMua5&Signature=dwxRrg3XgN%2FG%2FYIWiNToQ6DM%2Fgc%3D&versionId=CAEQDxiBgIDXirjxuRciIDc2MDAzNjI0ZmFhZDRiMjk5ZmQ5MmJkYThlMDcxYjhi&response-content-type=application%2Foctet-stream">templates.zip</a>
+                        下载下来解压以后放到resources.templates目录下
+                        </p>
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十八步</h3>
+                        本项目使用的sql文件
+                        <a href="https://severfile.oss-cn-beijing.aliyuncs.com/tdy_springboot.sql?Expires=1611629891&OSSAccessKeyId=TMP.3KgnCfcNFSk5bK2xarr82v7BAtRB1zEk7mvrSsm4sttBpDZbFib8bYFzJTKNAxNpWDX2dTHmfpKmdDyPjRvmQ8GAXdMua5&Signature=vm%2FIxW7%2B%2Bw5I6H3YvCTzrD9be5Q%3D&versionId=CAEQDxiBgICi5c_xuRciIDJkMGRhNjFlOWRjMzRmOTM4MjZhZTVjMzlkZTUwYmI5&response-content-type=application%2Foctet-stream">tdy_springboot.sql</a>
+                        导入到新建数据库中
+                        </p>
+                        </p>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p class="m-b-lg">
+                        <h3>第五十九步</h3>
+                        本项目使用的前端模板为hAdmin
+                        <a href="https://severfile.oss-cn-beijing.aliyuncs.com/hAdmin20161102.zip?Expires=1611629667&OSSAccessKeyId=TMP.3KgnCfcNFSk5bK2xarr82v7BAtRB1zEk7mvrSsm4sttBpDZbFib8bYFzJTKNAxNpWDX2dTHmfpKmdDyPjRvmQ8GAXdMua5&Signature=ykDBxLG6zxzADxnbagtWF87L4rk%3D&versionId=CAEQDxiBgIDQ.MjxuRciIGY3Yjc0OTZjZTg1NTRmNDBiZmNhZGJkZDIzNjFiMjg1&response-content-type=application%2Foctet-stream">hAdmin.zip</a>
+                        </p>
+                        </p>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <textarea id="copy" style="display:none;"></textarea>
+
+    <script>
+        $(document).ready(function () {
+
+
+            for (var i = 6; i < 37; i++) {
+               var editor = CodeMirror.fromTextArea(document.getElementById("code"+i+""), {
+                    lineNumbers: true,
+                    matchBrackets: true,
+                    styleActiveLine: true,
+                    lineWrapping: true, //代码折叠
+                    line: true,
+                    height:300,
+                    theme: "ambiance"
+                });
+                editor.setSize("100%",500);
+            }
+        });
+
+
+
+        function copyss(code){
+
+            var text = $('#'+code+'').text();
+            copyText(text);
+        }
+
+        /**
+         * 将文本内容复制到剪切板
+         * @param str 复制内容
+         */
+        function copyText(str) {
+            $('#copy').text(str).show();
+            var ele = document.getElementById("copy");
+            ele.select();
+            document.execCommand('copy', false, null);
+            $('#copy').hide();
+            layer.msg('复制成功!');
+        }
+
+    </script>
+
+
+
+
+</body>
+
+</html>

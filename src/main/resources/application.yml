@@ -1,0 +1,41 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: tdy-springboot
+  thymeleaf:
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/tdy_springboot?useSSL=false&useUnicode=true&characterEncoding=utf8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 3
+      auto-commit: true
+      idle-timeout: 10000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+mybatis:
+  # mapper.xml位置
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # domain位置
+  type-aliases-package: com.example
+
+#配置分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+

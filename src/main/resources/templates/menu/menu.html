@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: tableHeader('菜单列表')" />
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="menu-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            类型：<input type="text" name="type"/>
+                        </li>
+                        <li>
+                            名称：<input type="text" name="name"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.treeTable.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.treeForm.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="btn-group-sm" id="toolbar" role="group">
+    <a class="btn btn-success" onclick="$.operate.getContent('1','0')">
+        <i class="fa fa-plus"></i> 新增
+    </a>
+</div>
+
+<div class="col-sm-12 select-table table-striped">
+    <table id="bootstrap-tree-table" data-mobile-responsive="true"></table>
+</div>
+
+<th:block th:include="include :: tableFooter" />
+<script th:inline="javascript">
+    var prefix = "/menu";
+
+    $(function() {
+        var options = {
+            code: "menuId",
+            parentCode: "parentId",
+            uniqueId: "menuId",
+            url: prefix + "/list",
+            modalName: "用户列表",
+            width :600,
+            height :500,
+            addUrl :prefix+"/add",
+            editUrl :prefix+"/edit",
+            removeUrl :prefix+"/remove",
+            columns: [{
+                field: 'selectItem',
+                radio: true
+            },
+                {
+                    field : 'name',
+                    title : '名称',
+                    align: 'center',
+                    width: '20%',
+                    formatter: function(value, row, index) {
+                        if ($.common.isEmpty(row.icon)) {
+                            return row.name;
+                        } else {
+                            return '<i class="' + row.icon + '"></i> <span class="nav-label">' + row.name + '</span>';
+                        }
+                    }
+                },
+                {
+                    field: 'url',
+                    title: '路径',
+                    width: '10%',
+                    align: "left"
+                },
+                {
+                    field: 'authority',
+                    title: '权限标识',
+                    width: '10%',
+                    align: "left"
+                },
+                {
+                    field : 'type',
+                    title : '类型',
+                    width: '10%',
+                    align: "left",
+                    formatter: function(value, row, index) {
+                        if (value == 1) {
+                            value = '<span class="btn btn-warning btn-xs">目录</span>';
+                        } else if (value == 2) {
+                            value = '<span class="btn btn-success btn-xs">菜单</span>';
+                        } else if (value == 3) {
+                            value = '<span class="btn btn-danger btn-xs">按钮</span>';
+                        }
+                        return value;
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    width: '10%',
+                    align: "left"
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs" href="javascript:void(0)" onclick="$.operate.getContent(\'2\',\'' + row.menuId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-info btn-xs" href="javascript:void(0)" onclick="$.operate.getContent(\'1\',\'' + row.menuId + '\')"><i class="fa fa-plus"></i>新增</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="$.operate.removeTree(\'' + row.menuId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.treeTable.init(options);
+    });
+</script>
+</body>
+</html>

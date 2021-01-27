@@ -1,0 +1,78 @@
+	<!-- 通用CSS -->
+<div th:fragment="header(title)" >
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title th:text="${title}"></title>
+	<link rel="shortcut icon" href="favicon.ico">
+	<link th:href="@{css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+	<link th:href="@{css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+	<link th:href="@{css/animate.css}" rel="stylesheet">
+	<link th:href="@{css/style.css?v=4.1.0}" rel="stylesheet">
+</div>
+
+<!-- 通用JS -->
+<div th:fragment="footer">
+	<!-- 全局js -->
+	<script th:src="@{js/jquery.min.js?v=2.1.4}"></script>
+	<script th:src="@{js/bootstrap.min.js}"></script>
+	<!-- 自定义js -->
+	<script th:src="@{js/content.js?v=1.0.0}"></script>
+	<!-- 弹出框 -->
+	<script th:src="@{js/plugins/layer/layer.js}"></script>
+</div>
+
+<!-- 首页js -->
+<div th:fragment="index">
+	<!-- 全局js -->
+	<script th:src="@{js/jquery.min.js?v=2.1.4}"></script>
+	<script th:src="@{js/bootstrap.min.js}"></script>
+	<script th:src="@{js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+	<script th:src="@{js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	<!-- 自定义js -->
+	<script th:src="@{js/hAdmin.js?v=4.1.0}"></script>
+	<script type="text/javascript" th:src="@{js/index.js}"></script>
+
+</div>
+
+<!-- 表格通用CSS -->
+<div th:fragment="tableHeader(title)" >
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title th:text="${title}"></title>
+	<link rel="shortcut icon" href="favicon.ico">
+	<link th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+	<link th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+	<link th:href="@{/css/animate.css}" rel="stylesheet">
+	<link th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
+	<!-- bootstrap.table表单样式 -->
+	<link th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+	<link th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+	<link th:href="@{/css/plugins/bootstrap-table/table.css}" rel="stylesheet">
+	<link th:href="@{/css/plugins/summernote/summernote.css}" rel="stylesheet">
+	<link th:href="@{/css/plugins/summernote/summernote-bs3.css}" rel="stylesheet">
+</div>
+
+<!-- 表格通用JS -->
+<div th:fragment="tableFooter">
+	<!-- 全局js -->
+	<script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<!-- 自定义js -->
+	<script th:src="@{/js/content.js?v=1.0.0}"></script>
+	<!-- Bootstrap table -->
+	<script th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+	<script th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+	<script th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+	<script th:src="@{/js/plugins/bootstrap-treetable/bootstrap-treetable.js}"></script>
+	<script th:src="@{/js/table.js}"></script>
+	<!-- 弹出框 -->
+	<script th:src="@{/js/plugins/layer/layer.js}"></script>
+	<!-- 富文本 -->
+	<script th:src="@{/js/plugins/summernote/summernote.min.js}"></script>
+	<script th:src="@{/js/plugins/summernote/summernote-zh-CN.js}"></script>
+</div>
+

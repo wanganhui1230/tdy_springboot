@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.student.mapper.StudentMapper">
+
+    <select id="selectStudentListPage" parameterType="Student" resultType="Student">
+        select id, name, age, sex, grade, create_time, update_time
+        from student
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+</mapper>
