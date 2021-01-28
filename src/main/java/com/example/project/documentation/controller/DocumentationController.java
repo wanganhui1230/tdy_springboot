@@ -1,15 +1,10 @@
 package com.example.project.documentation.controller;
 
-
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.example.common.entity.AjaxResult;
 import com.example.common.entity.BaseController;
 import com.example.common.entity.TableDataInfo;
 import com.example.project.documentation.entity.Documentation;
 import com.example.project.documentation.service.DocumentationService;
-import com.example.project.documentationDetails.entity.DocumentationDetails;
-import com.example.project.documentationDetails.service.DocumentationDetailsService;
-import com.example.project.user.entity.User;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +22,6 @@ public class DocumentationController extends BaseController {
     @Autowired
     private DocumentationService documentationService;
 
-    @Autowired
-    private DocumentationDetailsService documentationDetailsService;
 
     @GetMapping()
     public String menu()
@@ -43,15 +35,18 @@ public class DocumentationController extends BaseController {
         return "documentation/add";
     }
 
+    @GetMapping("/edit")
+
+    public String edit(Integer id,ModelMap mmap)
+    {
+        mmap.put("Documentation",documentationService.getDocumentation(id));
+        return "documentation/edit";
+    }
+
     @GetMapping("/details")
     public String details(Integer id,ModelMap mmap)
     {
-        Documentation documentation = documentationService.selectById(id);
-        EntityWrapper<DocumentationDetails> wrapper  = new EntityWrapper<>();
-        wrapper.eq("documentation_id",id);
-        List<DocumentationDetails> dd = documentationDetailsService.selectList(wrapper);
-        documentation.setDocumentationDetailss(dd);
-        mmap.put("Documentation",documentation);
+        mmap.put("Documentation",documentationService.getDocumentation(id));
         return "documentation/details";
     }
 
@@ -60,25 +55,7 @@ public class DocumentationController extends BaseController {
     @Transactional(rollbackFor = Exception.class)
     public AjaxResult add(@RequestBody Map documentations)
     {
-        try {
-            List<Map> documentationDetails = (List<Map>) documentations.get("documentationDetailss");
-            Documentation documentation = new Documentation();
-            documentation.setTitle(documentationDetails.get(0).get("title").toString());
-            documentation.setCreateTime(new Date());
-            documentationService.insert(documentation);
-            for (int i = 0; i < documentationDetails.size(); i++) {
-                DocumentationDetails  dd = new DocumentationDetails();
-                dd.setDocumentationId(documentation.getId());
-                dd.setSort(documentationDetails.get(i).get("sort").toString());
-                dd.setTitle(documentationDetails.get(i).get("title").toString());
-                dd.setContent(documentationDetails.get(i).get("content").toString());
-                dd.setCreateTime(new Date());
-                documentationDetailsService.insert(dd);
-            }
-        }catch(Exception e){
-            return error("保存失败！");
-        }
-        return toAjax(1);
+        return toAjax(documentationService.save(documentations));
     }
 
     @PostMapping("/remove")
@@ -86,10 +63,7 @@ public class DocumentationController extends BaseController {
     @Transactional(rollbackFor = Exception.class)
     public AjaxResult remove(Integer id)
     {
-        EntityWrapper<DocumentationDetails> wrapper  = new EntityWrapper<>();
-        wrapper.eq("documentation_id",id);
-        documentationDetailsService.delete(wrapper);
-        return toAjax(documentationService.deleteById(id));
+        return toAjax(documentationService.remove(id));
     }
 
     /**
