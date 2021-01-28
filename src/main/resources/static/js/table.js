@@ -110,7 +110,6 @@
             },
             // 搜索-默认第一个form
             search: function(formId, data) {
-                debugger
                 var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
                 var params = $.btTable.bootstrapTable('getOptions');
                 params.queryParams = function(params) {
@@ -273,7 +272,6 @@
             },
             // 弹出层指定宽度
             getContent: function (type,id,callback) {
-                debugger
                 var title = (type==1?"新增":"修改");
                 var url =(type==1?$.table._option.addUrl:$.table._option.editUrl)+(id == undefined?"":"?id="+id);
                 if ($.common.isEmpty(callback)) {

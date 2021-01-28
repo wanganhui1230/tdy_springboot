@@ -119,12 +119,29 @@
         </dependency>
         <!-- SpringBoot集成thymeleaf模板 -->
 
-
+        <!-- 工具类 -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>19.0</version>
         </dependency>
+        <!-- 工具类 -->
+
+        <!-- 阿里上传图片 -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <!-- 阿里上传图片 -->
+
+        <!--io常用工具类 -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <!--io常用工具类 -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

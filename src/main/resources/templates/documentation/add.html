@@ -1,7 +1,28 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-	<th:block th:include="include :: tableHeader('新增用户')" />
+	<th:block th:include="include :: tableHeader('文档添加')" />
+	<style type="text/css">
+		.modal-dialog {
+			position: fixed;
+			left: 25%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.modal-backdrop {
+			position: static;
+			top: 0px;
+			right: 0px;
+			bottom: 0px;
+			left: 0px;
+			z-index: 1040;
+			background-color: rgb(0, 0, 0);
+		}
+		.modal-content {
+			padding: 0 20px;
+		}
+	</style>
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -29,14 +50,57 @@
         var prefix = "/documentation";
 
 		$(document).ready(function () {
-
 			$('#title1b').summernote({
+				placeholder: '请输入内容',
 				lang: 'zh-CN',
-				height: 680,
-				width: 489
+				height: 550,
+				width: 489,
+				callbacks: {
+					onImageUpload: function (files) {
+						sendFile(files[0], this);
+					},
+					onMediaDelete: function (target) {
+						removeFile(target.context.dataset.filename)
+					}
+				}
 			});
 
 		});
+
+		// 上传文件
+		function sendFile(file, obj) {
+			console.log(obj)
+			var data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				type: "POST",
+				url:"/common/upload",
+				data: data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: 'json',
+				success: function(result) {
+					if (result.code == 0) {
+						$(obj).summernote('editor.insertImage', result.url, result.fileName);
+					} else {
+						layer.msg(result.msg);
+					}
+				},
+				error: function(error) {
+					layer.msg("图片上传失败。");
+				}
+			});
+		}
+
+		// 删除文件
+		function removeFile(fileName) {
+			$.ajax({ url: "/common/remove", type: "POST",data: {"fileName":fileName}, success: function(result){
+					if(result.code != 0){
+						layer.msg(result.msg);
+					}
+				}});
+		}
 
 		function submitHandler() {
 			var Documentation ={};
@@ -47,7 +111,7 @@
 				var DocumentationDetails = {};
 				DocumentationDetails.sort = i++;
 				DocumentationDetails.title = this.value;
-				DocumentationDetails.content = $("#"+this.id+"b").code();
+				DocumentationDetails.content = $("#"+this.id+"b").summernote('code');
 				documentationDetailss.push(DocumentationDetails);
 			});
 			Documentation.documentationDetailss = documentationDetailss;
@@ -76,7 +140,6 @@
 					}
 				}
 			});
-			// $.operate.save(prefix+"/add",JSON.stringify(Documentation));
 		}
 
 		function add() {
@@ -93,9 +156,15 @@
 					"<textarea id=\""+id+"b\" name=\"content\" ></textarea>\n" +
 					"</div>");
 			$("#"+id+"b").summernote({
+				placeholder: '请输入内容',
 				lang: 'zh-CN',
-				height: 680,
-				width: 489
+				height: 550,
+				width: 489,
+				callbacks: {
+					onImageUpload: function (files) {
+						sendFile(files[0], this);
+					}
+				}
 			});
 		}
 		$(".col-xs-3").on("focus","input[name='title']",function(){

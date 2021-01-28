@@ -86,7 +86,8 @@
     function details(id) {
         var index = layer.open({
                 type: 2,
-                fix: false,
+                fix: true,
+                maxmin: true,
                 shade: 0.3,
                 title: "文档详情",
                 content: prefix+"/details?id="+id,
